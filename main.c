@@ -1,8 +1,20 @@
 #include <stdio.h>
+#include <stdlib.h>
+
+// Structure pour un sommet
+typedef struct {
+    char nom[50];
+} Sommet;
+
+// Structure pour un arc
+typedef struct {
+    int source;
+    int destination;
+    float ponderation;
+} Arc;
+
 
 int main() {
-    printf("Hello, World!\n");
-    printf("test\n");
-    printf("test2\n");
+
     return 0;
 }
