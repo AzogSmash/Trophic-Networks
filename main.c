@@ -110,7 +110,7 @@ void menuPrincipal() {
 
         if (choix >= 1 && choix <= 3) {
             // Chargement du fichier correspondant
-            const char *fichiers[] = {"jungle.txt", "marin.txt", "savane.txt"};
+            const char *fichiers[] = {"C:\\Trophic-Networks\\jungle.txt", "C:\\Trophic-Networks\\marin.txt", "C:\\Trophic-Networks\\savane.txt"};
             char nomEcosysteme[50], climat[50];
             Sommet *sommets = NULL;
             Arc *arcs = NULL;

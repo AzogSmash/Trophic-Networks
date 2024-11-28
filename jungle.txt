@@ -1,0 +1,6 @@
+Exemple
+Humide
+2 1
+Tigre
+Singe
+0 1 1.0
