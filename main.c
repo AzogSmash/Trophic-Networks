@@ -24,9 +24,9 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
 
     // Lecture du nom de l'écosystème et du climat
     fgets(nomEcosysteme, 50, fichier);
-    nomEcosysteme[strcspn(nomEcosysteme, "\n")] = '\0'; // Retirer le saut de ligne
+    nomEcosysteme[strcspn(nomEcosysteme, "\n")] = '\0';
     fgets(climat, 50, fichier);
-    climat[strcspn(climat, "\n")] = '\0'; // Retirer le saut de ligne
+    climat[strcspn(climat, "\n")] = '\0';
 
     // Lecture du nombre de sommets et d'arcs
     fscanf(fichier, "%d %d\n", nbSommets, nbArcs);
@@ -174,9 +174,38 @@ void analyserGraphe(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
     }
     if (!found) printf("  Aucune\n");
 
-    // Libération de la mémoire
+
     free(predCount);
     free(succCount);
+}
+// Fonction DFS pour explorer les sommets atteignables
+void dfs(int sommet, int *visite, Arc *arcs, int nbArcs, int nbSommets) {
+    visite[sommet] = 1; // Marquer le sommet comme visité
+    for (int i = 0; i < nbArcs; i++) {
+        // Si l'arête part du sommet courant et mène à un sommet non visité
+        if (arcs[i].source == sommet && !visite[arcs[i].destination]) {
+            dfs(arcs[i].destination, visite, arcs, nbArcs, nbSommets);
+        }
+    }
+}
+
+// Fonction pour vérifier la connexité du graphe
+int verifierConnexite(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
+    int *visite = (int *)calloc(nbSommets, sizeof(int)); // Tableau de visite pour les sommets
+
+    // Lancer DFS à partir du sommet 0
+    dfs(0, visite, arcs, nbArcs, nbSommets);
+
+    // Vérifier si tous les sommets ont été visités
+    for (int i = 0; i < nbSommets; i++) {
+        if (!visite[i]) {
+            free(visite);
+            return 0; // Si un sommet n'est pas visité, le graphe n'est pas connexe
+        }
+    }
+
+    free(visite);
+    return 1; // Si tous les sommets ont été visités, le graphe est connexe
 }
 
 // Menu principal
@@ -184,7 +213,7 @@ void menuPrincipal() {
     int choix;
 
     do {
-        system("cls");  // Pour Windows (remplacez par "clear" si nécessaire sous Linux/Mac)
+        system("cls");
         printf("\n Menu Principal \n");
         printf("1. Reseau de la jungle\n");
         printf("2. Reseau marin\n");
@@ -207,10 +236,11 @@ void menuPrincipal() {
                 system("cls");
                 printf("\n--- %s ---\n", nomEcosysteme);
                 printf("1. Afficher le reseau\n");
-                printf("2. Informations sur un sommet\n");
-                printf("3. Statistiques du graphe\n");
-                printf("4. Sommets particuliers\n");
-                printf("5. Retour au menu principal\n");
+                printf("2. Connexite du sommet \n");
+                printf("3. Informations sur un sommet\n");
+                printf("4. Statistiques du graphe\n");
+                printf("5. Sommets particuliers\n");
+                printf("6. Retour au menu principal\n");
                 printf("Votre choix : ");
                 scanf("%d", &sousChoix);
 
@@ -219,6 +249,16 @@ void menuPrincipal() {
                         afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
                         break;
                     case 2: {
+                        if (verifierConnexite(sommets, nbSommets, arcs, nbArcs)) {
+                            printf("Le graphe est connexe.\n");
+                        } else {
+                            printf("Le graphe n'est pas connexe.\n");
+                        }
+                        break;
+                    }
+
+
+                    case 3: {
                         int sommetIndex;
                         printf("Selectionnez un sommet (0-%d) : ", nbSommets - 1);
                         scanf("%d", &sommetIndex);
@@ -229,24 +269,24 @@ void menuPrincipal() {
                         }
                         break;
                     }
-                    case 3:
+                    case 4:
                         calculerComplexite(nbSommets, nbArcs);
                         break;
-                    case 4:
+                    case 5:
                         analyserGraphe(sommets, nbSommets, arcs, nbArcs);
                         break;
-                    case 5:
+                    case 6:
                         printf("Retour au menu principal...\n");
                         break;
                     default:
                         printf("Choix invalide.\n");
                 }
-                if (sousChoix != 5) {
+                if (sousChoix != 6) {
                     printf("\nAppuyez sur une touche pour revenir !");
                     getchar();
                     getchar();
                 }
-            } while (sousChoix != 5);
+            } while (sousChoix != 6);
 
             free(sommets);
             free(arcs);
