@@ -1,6 +1,8 @@
-Exemple
-Humide
-2 1
-Tigre
-Singe
+Froid
+4 2
+Ours
+Phoque
+Poisson
+Manchot
 0 1 1.0
+3 2 1.0
