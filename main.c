@@ -85,7 +85,16 @@ void predecessorsAndSuccessors(int sommetIndex, Sommet *sommets, int nbSommets, 
         }
     }
 }
+// Fonction pour calculer la complexite du graphe
+void calculerComplexite(int nbSommets, int nbArcs) {
+    printf("\n--- Statistiques du graphe ---\n");
+    printf("Nombre d'especes : %d\n", nbSommets);
+    printf("Nombre de liaisons : %d\n", nbArcs);
 
+    // Densite de liaison = arcs / (sommets * (sommets - 1))
+    float densite = (float) nbArcs / (nbSommets * (nbSommets - 1));
+    printf("Densite de liaison : %.2f\n", densite);
+}
 int main() {
 
     return 0;
