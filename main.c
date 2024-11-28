@@ -186,7 +186,7 @@ void menuPrincipal() {
     do {
         system("cls");  // Pour Windows (remplacez par "clear" si nécessaire sous Linux/Mac)
         printf("\n Menu Principal \n");
-        printf("1. Reseau de la jungle\n");
+        printf("1. Reseau de la ungle\n");
         printf("2. Reseau marin\n");
         printf("3. Reseau de la savane\n");
         printf("4. Quitter\n");
