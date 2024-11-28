@@ -65,6 +65,7 @@ void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const
                arcs[i].ponderation);
     }
 }
+
 // Fonction pour afficher les predecesseurs et successeurs d'un sommet
 void predecessorsAndSuccessors(int sommetIndex, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
     printf("\n--- Informations sur le sommet : %s ---\n", sommets[sommetIndex].nom);
@@ -85,6 +86,7 @@ void predecessorsAndSuccessors(int sommetIndex, Sommet *sommets, int nbSommets, 
         }
     }
 }
+
 // Fonction pour calculer la complexite du graphe
 void calculerComplexite(int nbSommets, int nbArcs) {
     printf("\n--- Statistiques du graphe ---\n");
@@ -95,11 +97,13 @@ void calculerComplexite(int nbSommets, int nbArcs) {
     float densite = (float) nbArcs / (nbSommets * (nbSommets - 1));
     printf("Densite de liaison : %.2f\n", densite);
 }
+
 // Menu principal
 void menuPrincipal() {
     int choix;
 
     do {
+        system("cls");  // Efface l'écran avant d'afficher le menu principal
         printf("\n--- Menu Principal ---\n");
         printf("1. Reseau de la jungle\n");
         printf("2. Reseau marin\n");
@@ -121,6 +125,7 @@ void menuPrincipal() {
             // Sous-menu
             int sousChoix;
             do {
+                system("cls");  // Efface l'écran avant d'afficher le sous-menu
                 printf("\n--- %s ---\n", nomEcosysteme);
                 printf("1. Afficher le reseau\n");
                 printf("2. Informations sur un sommet\n");
@@ -153,6 +158,11 @@ void menuPrincipal() {
                     default:
                         printf("Choix invalide.\n");
                 }
+                if (sousChoix != 4) {
+                    printf("\nAppuyez sur une touche pour revenir !");
+                    getchar();  // Pour attraper le '\n' de l'input précédent
+                    getchar();  // Attente de la touche pour continuer
+                }
             } while (sousChoix != 4);
 
             // Liberation de la memoire
@@ -165,7 +175,8 @@ void menuPrincipal() {
         }
     } while (choix != 4);
 }
+
 int main() {
-   menuPrincipal();
+    menuPrincipal();
     return 0;
 }
