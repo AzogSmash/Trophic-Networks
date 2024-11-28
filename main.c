@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Structure pour un sommet
 typedef struct {
@@ -12,6 +13,42 @@ typedef struct {
     int destination;
     float ponderation;
 } Arc;
+
+// Fonction pour lire un graphe depuis un fichier texte
+void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Sommet **sommets, int *nbSommets, Arc **arcs, int *nbArcs) {
+    FILE *fichier = fopen(nomFichier, "r");
+    if (fichier == NULL) {
+        printf("Erreur : impossible d'ouvrir le fichier %s\n", nomFichier);
+        exit(1);
+    }
+
+    // Lecture du nom de l'ecosysteme et du climat
+    fgets(nomEcosysteme, 50, fichier);
+    nomEcosysteme[strcspn(nomEcosysteme, "\n")] = '\0';  // Retirer le saut de ligne
+    fgets(climat, 50, fichier);
+    climat[strcspn(climat, "\n")] = '\0';  // Retirer le saut de ligne
+
+    // Lecture du nombre de sommets et d'arcs
+    fscanf(fichier, "%d %d\n", nbSommets, nbArcs);
+
+    // Allocation memoire pour les sommets et les arcs
+    *sommets = (Sommet *)malloc(*nbSommets * sizeof(Sommet));
+    *arcs = (Arc *)malloc(*nbArcs * sizeof(Arc));
+
+    // Lecture des sommets
+    for (int i = 0; i < *nbSommets; i++) {
+        fgets((*sommets)[i].nom, 50, fichier);
+        (*sommets)[i].nom[strcspn((*sommets)[i].nom, "\n")] = '\0';  // Retirer le saut de ligne
+    }
+
+    // Lecture des arcs
+    for (int i = 0; i < *nbArcs; i++) {
+        fscanf(fichier, "%d %d %f\n", &(*arcs)[i].source, &(*arcs)[i].destination, &(*arcs)[i].ponderation);
+    }
+
+    fclose(fichier);
+}
+
 // Fonction pour afficher les informations sur le reseau trophique
 void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const char *nomEcosysteme, const char *climat) {
     printf("\n--- Description du reseau trophique : %s ---\n", nomEcosysteme);
