@@ -95,7 +95,77 @@ void calculerComplexite(int nbSommets, int nbArcs) {
     float densite = (float) nbArcs / (nbSommets * (nbSommets - 1));
     printf("Densite de liaison : %.2f\n", densite);
 }
-int main() {
+// Menu principal
+void menuPrincipal() {
+    int choix;
 
+    do {
+        printf("\n--- Menu Principal ---\n");
+        printf("1. Reseau de la jungle\n");
+        printf("2. Reseau marin\n");
+        printf("3. Reseau de la savane\n");
+        printf("4. Quitter\n");
+        printf("Votre choix : ");
+        scanf("%d", &choix);
+
+        if (choix >= 1 && choix <= 3) {
+            // Chargement du fichier correspondant
+            const char *fichiers[] = {"jungle.txt", "marin.txt", "savane.txt"};
+            char nomEcosysteme[50], climat[50];
+            Sommet *sommets = NULL;
+            Arc *arcs = NULL;
+            int nbSommets, nbArcs;
+
+            lireGraphe(fichiers[choix - 1], nomEcosysteme, climat, &sommets, &nbSommets, &arcs, &nbArcs);
+
+            // Sous-menu
+            int sousChoix;
+            do {
+                printf("\n--- %s ---\n", nomEcosysteme);
+                printf("1. Afficher le reseau\n");
+                printf("2. Informations sur un sommet\n");
+                printf("3. Statistiques du graphe\n");
+                printf("4. Retour au menu principal\n");
+                printf("Votre choix : ");
+                scanf("%d", &sousChoix);
+
+                switch (sousChoix) {
+                    case 1:
+                        afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
+                        break;
+                    case 2: {
+                        int sommetIndex;
+                        printf("Selectionnez un sommet (0-%d) : ", nbSommets - 1);
+                        scanf("%d", &sommetIndex);
+                        if (sommetIndex >= 0 && sommetIndex < nbSommets) {
+                            predecessorsAndSuccessors(sommetIndex, sommets, nbSommets, arcs, nbArcs);
+                        } else {
+                            printf("Sommet invalide.\n");
+                        }
+                        break;
+                    }
+                    case 3:
+                        calculerComplexite(nbSommets, nbArcs);
+                        break;
+                    case 4:
+                        printf("Retour au menu principal...\n");
+                        break;
+                    default:
+                        printf("Choix invalide.\n");
+                }
+            } while (sousChoix != 4);
+
+            // Liberation de la memoire
+            free(sommets);
+            free(arcs);
+        } else if (choix == 4) {
+            printf("Au revoir !\n");
+        } else {
+            printf("Choix invalide.\n");
+        }
+    } while (choix != 4);
+}
+int main() {
+   menuPrincipal();
     return 0;
 }
