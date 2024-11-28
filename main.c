@@ -65,7 +65,26 @@ void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const
                arcs[i].ponderation);
     }
 }
+// Fonction pour afficher les predecesseurs et successeurs d'un sommet
+void predecessorsAndSuccessors(int sommetIndex, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
+    printf("\n--- Informations sur le sommet : %s ---\n", sommets[sommetIndex].nom);
 
+    // Liste des predecesseurs
+    printf("Predecesseurs :\n");
+    for (int i = 0; i < nbArcs; i++) {
+        if (arcs[i].destination == sommetIndex) {
+            printf("  - %s\n", sommets[arcs[i].source].nom);
+        }
+    }
+
+    // Liste des successeurs
+    printf("Successeurs :\n");
+    for (int i = 0; i < nbArcs; i++) {
+        if (arcs[i].source == sommetIndex) {
+            printf("  - %s\n", sommets[arcs[i].destination].nom);
+        }
+    }
+}
 
 int main() {
 
