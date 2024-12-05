@@ -49,22 +49,25 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
     fclose(fichier);
 }
 
-// Fonction pour afficher les informations sur le réseau trophique
 void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const char *nomEcosysteme, const char *climat) {
-    printf("\n--- Description du reseau trophique : %s ---\n", nomEcosysteme);
+    printf("\n=========================================\n");
+    printf("   Description du reseau trophique : %s\n", nomEcosysteme);
+    printf("=========================================\n");
     printf("Climat : %s\n", climat);
-    printf("Liste des sommets (especes) :\n");
+    printf("\nListe des sommets (especes) :\n");
     for (int i = 0; i < nbSommets; i++) {
-        printf("  - %s\n", sommets[i].nom);
+        printf("  [%d] %s\n", i, sommets[i].nom);
     }
     printf("\nListe des arcs (interactions) avec ponderations :\n");
     for (int i = 0; i < nbArcs; i++) {
-        printf("  - %s -> %s : %.1f\n",
+        printf("  - %s -> %s : %.2f\n",
                sommets[arcs[i].source].nom,
                sommets[arcs[i].destination].nom,
                arcs[i].ponderation);
     }
+    printf("=========================================\n");
 }
+
 
 // Fonction pour afficher les prédécesseurs et successeurs d'un sommet
 void predecessorsAndSuccessors(int sommetIndex, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
@@ -256,17 +259,84 @@ void simulationMenu(Sommet *sommets, int nbSommets) {
     }
 }
 
-// Menu principal
+
+void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
+    int sousChoix;
+
+    do {
+#ifdef _WIN32
+        system("cls");
+#else
+        system("clear");
+#endif
+
+        printf("=========================================\n");
+        printf("        Menu du reseau : %s\n", nomEcosysteme);
+        printf("=========================================\n");
+        printf("1. Verifier la connexite du reseau\n");
+        printf("2. Afficher les details d'un sommet\n");
+        printf("3. Calculer les statistiques du graphe\n");
+        printf("4. Identifier les sommets particuliers\n");
+        printf("5. Retour au menu principal\n");
+        printf("=========================================\n");
+        printf("Votre choix : ");
+        scanf("%d", &sousChoix);
+
+        switch (sousChoix) {
+            case 1:
+                printf(verifierConnexite(sommets, nbSommets, arcs, nbArcs) ? "\nLe graphe est connexe.\n" : "\nLe graphe n'est pas connexe.\n");
+                break;
+            case 2: {
+                int sommetIndex;
+                printf("\nSelectionnez un sommet (0-%d) : ", nbSommets - 1);
+                scanf("%d", &sommetIndex);
+                if (sommetIndex >= 0 && sommetIndex < nbSommets) {
+                    predecessorsAndSuccessors(sommetIndex, sommets, nbSommets, arcs, nbArcs);
+                } else {
+                    printf("\nSommet invalide.\n");
+                }
+                break;
+            }
+            case 3:
+                calculerComplexite(nbSommets, nbArcs);
+                break;
+            case 4:
+                analyserGraphe(sommets, nbSommets, arcs, nbArcs);
+                break;
+            case 5:
+                printf("\nRetour au menu principal...\n");
+                break;
+            default:
+                printf("\nChoix invalide. Veuillez reessayer.\n");
+        }
+
+        if (sousChoix != 5) {
+            printf("\nAppuyez sur Entree pour continuer...\n");
+            getchar();
+            getchar();
+        }
+    } while (sousChoix != 5);
+}
+
+
 void menuPrincipal() {
     int choix;
 
     do {
-        system("cls"); // Nettoie la console (sous Windows)
-        printf("\n Menu Principal \n");
-        printf("1. Reseau de la jungle\n");
-        printf("2. Reseau marin\n");
-        printf("3. Reseau de la savane\n");
-        printf("4. Quitter\n");
+#ifdef _WIN32
+        system("cls");
+#else
+        system("clear");
+#endif
+
+        printf("=========================================\n");
+        printf("        Programme Trophic Networks       \n");
+        printf("=========================================\n");
+        printf("1. Explorer le reseau de la jungle\n");
+        printf("2. Explorer le reseau marin\n");
+        printf("3. Explorer le reseau de la savane\n");
+        printf("4. Quitter le programme\n");
+        printf("=========================================\n");
         printf("Votre choix : ");
         scanf("%d", &choix);
 
@@ -277,76 +347,32 @@ void menuPrincipal() {
             Arc *arcs = NULL;
             int nbSommets, nbArcs;
 
+            // Lecture du graphe
             lireGraphe(fichiers[choix - 1], nomEcosysteme, climat, &sommets, &nbSommets, &arcs, &nbArcs);
 
-            int sousChoix;
-            do {
-                system("cls"); // Nettoie la console (sous Windows)
-                printf("\n--- %s ---\n", nomEcosysteme);
-                printf("1. Afficher le reseau\n");
-                printf("2. Connexite du graphe\n");
-                printf("3. Informations sur un sommet\n");
-                printf("4. Statistiques du graphe\n");
-                printf("5. Sommets particuliers\n");
-                printf("6. Simulation de population\n"); // Nouvelle option ajoutée
-                printf("7. Retour au menu principal\n");
-                printf("Votre choix : ");
-                scanf("%d", &sousChoix);
+            // Affichage direct des informations du réseau
+            afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
 
-                switch (sousChoix) {
-                    case 1:
-                        afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
-                        break;
-                    case 2: {
-                        if (verifierConnexite(sommets, nbSommets, arcs, nbArcs)) {
-                            printf("Le graphe est connexe.\n");
-                        } else {
-                            printf("Le graphe n'est pas connexe.\n");
-                        }
-                        break;
-                    }
-                    case 3: {
-                        int sommetIndex;
-                        printf("Selectionnez un sommet (0-%d) : ", nbSommets - 1);
-                        scanf("%d", &sommetIndex);
-                        if (sommetIndex >= 0 && sommetIndex < nbSommets) {
-                            predecessorsAndSuccessors(sommetIndex, sommets, nbSommets, arcs, nbArcs);
-                        } else {
-                            printf("Sommet invalide.\n");
-                        }
-                        break;
-                    }
-                    case 4:
-                        calculerComplexite(nbSommets, nbArcs);
-                        break;
-                    case 5:
-                        analyserGraphe(sommets, nbSommets, arcs, nbArcs);
-                        break;
-                    case 6:
-                        simulationMenu(sommets, nbSommets);
-                        break;
-                    case 7:
-                        printf("Retour au menu principal...\n");
-                        break;
-                    default:
-                        printf("Choix invalide.\n");
-                }
+            // Accéder au sous-menu
+            sousMenuReseau(nomEcosysteme, sommets, nbSommets, arcs, nbArcs);
 
-                if (sousChoix != 7) {
-                    printf("\nAppuyez sur une touche pour revenir !");
-                    getchar();
-                }
-            } while (sousChoix != 7);
-
+            // Libérer la mémoire
             free(sommets);
             free(arcs);
         } else if (choix == 4) {
-            printf("Au revoir !\n");
+            printf("\nMerci d'avoir utilise le programme. Au revoir !\n");
         } else {
-            printf("Choix invalide.\n");
+            printf("\nChoix invalide. Veuillez reessayer.\n");
+        }
+
+        if (choix != 4) {
+            printf("\nAppuyez sur Entree pour revenir au menu principal...\n");
+            getchar();
+            getchar();
         }
     } while (choix != 4);
 }
+
 
 int main() {
     menuPrincipal();
