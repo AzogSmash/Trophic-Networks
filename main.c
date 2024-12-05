@@ -229,6 +229,26 @@ void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int 
     }
 }
 
+// Intégration dans le menu
+void simulationMenu(Sommet *sommets, int nbSommets) {
+    int sommetIndex;
+    float N0, r, K;
+    int iterations;
+
+    printf("\n--- Simulation de population ---\n");
+    printf("Sélectionnez un sommet (0-%d) : ", nbSommets - 1);
+    scanf("%d", &sommetIndex);
+
+    if (sommetIndex >= 0 && sommetIndex < nbSommets) {
+        printf("Entrez la population initiale (N0) : ");
+        scanf("%f", &N0);
+        printf("Entrez le taux de croissance (r) : ");
+        scanf("%f", &r);
+        printf("Entrez la capacité de charge (K) : ");
+        scanf("%f", &K);
+        printf("Entrez le nombre d'itérations : ");
+        scanf("%d", &iterations);
+
 
 // Menu principal
 void menuPrincipal() {
