@@ -232,7 +232,7 @@ void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int 
     }
 }
 
-// Intégration dans le menu
+// Intégration dans le menus
 void simulationMenu(Sommet *sommets, int nbSommets) {
     int sommetIndex;
     float N0, r, K;
