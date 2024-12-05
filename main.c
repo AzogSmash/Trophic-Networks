@@ -249,6 +249,12 @@ void simulationMenu(Sommet *sommets, int nbSommets) {
         printf("Entrez le nombre d'itérations : ");
         scanf("%d", &iterations);
 
+        // Appel de la simulation pour l'espèce sélectionnée
+        simulationPopulationSommet(&sommets[sommetIndex], N0, r, K, iterations);
+    } else {
+        printf("Sommet invalide.\n");
+    }
+}
 
 // Menu principal
 void menuPrincipal() {
