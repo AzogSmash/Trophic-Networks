@@ -223,7 +223,7 @@ void menuPrincipal() {
         scanf("%d", &choix);
 
         if (choix >= 1 && choix <= 3) {
-            const char *fichiers[] = {"C:\\Trophic-Networks\\jungle.txt", "C:\\Trophic-Networks\\marin.txt", "C:\\Trophic-Networks\\savane.txt"};
+            const char *fichiers[] = {"jungle.txt", "marin.txt", "savane.txt"};
             char nomEcosysteme[50], climat[50];
             Sommet *sommets = NULL;
             Arc *arcs = NULL;

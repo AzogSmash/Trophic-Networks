@@ -1,6 +1,0 @@
-Exemple1
-Humide1
-2 1
-Requin
-Otarie
-0 1 1.0

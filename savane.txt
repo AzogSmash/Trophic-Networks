@@ -1,6 +1,0 @@
-Exemple2
-Humide2
-2 1
-Lion
-Zebre
-0 1 1.0
