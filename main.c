@@ -207,6 +207,28 @@ int verifierConnexite(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
     free(visite);
     return 1; // Si tous les sommets ont été visités, le graphe est connexe
 }
+// Fonction pour simuler la dynamique de population d'une espèce
+void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int iterations) {
+    printf("\n--- Simulation pour l'espèce : %s ---\n", sommet->nom);
+    printf("Population initiale (N0) : %.2f\n", N0);
+    printf("Taux de croissance (r) : %.2f\n", r);
+    printf("Capacité de charge (K) : %.2f\n", K);
+    printf("Nombre d'itérations : %d\n\n", iterations);
+
+    float N = N0; // Population initiale
+    printf("Itération\tPopulation (N)\n");
+    printf("--------------------------------\n");
+
+    for (int t = 0; t <= iterations; t++) {
+        printf("%d\t\t%.2f\n", t, N);
+        N = N + r * N * (1 - N / K); // Équation logistique
+        if (N < 0) {
+            N = 0; // Extinction
+            break;
+        }
+    }
+}
+
 
 // Menu principal
 void menuPrincipal() {
