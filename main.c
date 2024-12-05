@@ -261,7 +261,7 @@ void menuPrincipal() {
     int choix;
 
     do {
-        system("cls");
+        system("cls"); // Nettoie la console (sous Windows)
         printf("\n Menu Principal \n");
         printf("1. Reseau de la jungle\n");
         printf("2. Reseau marin\n");
@@ -281,14 +281,15 @@ void menuPrincipal() {
 
             int sousChoix;
             do {
-                system("cls");
+                system("cls"); // Nettoie la console (sous Windows)
                 printf("\n--- %s ---\n", nomEcosysteme);
                 printf("1. Afficher le reseau\n");
-                printf("2. Connexite du sommet \n");
+                printf("2. Connexite du graphe\n");
                 printf("3. Informations sur un sommet\n");
                 printf("4. Statistiques du graphe\n");
                 printf("5. Sommets particuliers\n");
-                printf("6. Retour au menu principal\n");
+                printf("6. Simulation de population\n"); // Nouvelle option ajoutée
+                printf("7. Retour au menu principal\n");
                 printf("Votre choix : ");
                 scanf("%d", &sousChoix);
 
@@ -304,8 +305,6 @@ void menuPrincipal() {
                         }
                         break;
                     }
-
-
                     case 3: {
                         int sommetIndex;
                         printf("Selectionnez un sommet (0-%d) : ", nbSommets - 1);
@@ -324,17 +323,20 @@ void menuPrincipal() {
                         analyserGraphe(sommets, nbSommets, arcs, nbArcs);
                         break;
                     case 6:
+                        simulationMenu(sommets, nbSommets);
+                        break;
+                    case 7:
                         printf("Retour au menu principal...\n");
                         break;
                     default:
                         printf("Choix invalide.\n");
                 }
-                if (sousChoix != 6) {
+
+                if (sousChoix != 7) {
                     printf("\nAppuyez sur une touche pour revenir !");
                     getchar();
-                    getchar();
                 }
-            } while (sousChoix != 6);
+            } while (sousChoix != 7);
 
             free(sommets);
             free(arcs);
