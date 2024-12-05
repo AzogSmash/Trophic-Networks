@@ -4,7 +4,7 @@
 
 // Structure pour un sommet
 typedef struct {
-    char nom[50];h
+    char nom[50];
 } Sommet;
 
 // Structure pour un arc
