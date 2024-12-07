@@ -1,0 +1,27 @@
+digraph Savane {
+Lion -> Zebre [label="0.40"];
+Lion -> Gnou [label="0.30"];
+Lion -> Impala [label="0.25"];
+Lion -> Gazelle [label="0.05"];
+Lion -> Autruche [label="0.10"];
+Hyene -> Zebre [label="0.35"];
+Hyene -> Gnou [label="0.25"];
+Hyene -> Impala [label="0.20"];
+Hyene -> Gazelle [label="0.10"];
+Hyene -> Autruche [label="0.05"];
+Leopard -> Gnou [label="0.25"];
+Leopard -> Impala [label="0.20"];
+Leopard -> Gazelle [label="0.15"];
+Leopard -> Autruche [label="0.10"];
+Crocodile -> Antilope [label="0.30"];
+Crocodile -> Hippopotame [label="0.20"];
+Crocodile -> Poisson [label="0.15"];
+Crocodile -> Tortue [label="0.10"];
+Crocodile -> Oie [label="0.10"];
+Crocodile -> Canard [label="0.05"];
+Crocodile -> Mouette [label="0.05"];
+Panthere -> Gazelle [label="0.40"];
+Panthere -> Antilope [label="0.35"];
+Panthere -> Oie [label="0.15"];
+Panthere -> Tortue [label="0.10"];
+}
