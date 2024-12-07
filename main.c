@@ -262,16 +262,18 @@ void simulationMenu(Sommet *sommets, int nbSommets) {
     }
 }
 
+void afficherGraphiqueDot(const char *fichierDot) {
+    char commande[256];
+    snprintf(commande, sizeof(commande), "start %s", fichierDot);
+    system(commande);
+}
+
 
 void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
     int sousChoix;
 
     do {
-#ifdef _WIN32
-        system("cls");
-#else
-        system("clear");
-#endif
+        system("cls"); // Nettoyer l'écran pour Windows
 
         printf("=========================================\n");
         printf("        Menu du reseau : %s\n", nomEcosysteme);
@@ -321,16 +323,11 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
     } while (sousChoix != 5);
 }
 
-
 void menuPrincipal() {
     int choix;
 
     do {
-#ifdef _WIN32
-        system("cls");
-#else
-        system("clear");
-#endif
+        system("cls"); // Nettoyer l'écran pour Windows
 
         printf("=========================================\n");
         printf("        Programme Trophic Networks       \n");
@@ -346,23 +343,32 @@ void menuPrincipal() {
 
         if (choix >= 1 && choix <= 4) {
             const char *fichiers[] = {"jungle.txt", "marin.txt", "savane.txt"};
-            char cheminFichier[100], nomEcosysteme[50], climat[50];
+            const char *fichiersDot[] = {"jungle.dot", "marin.dot", "savane.dot"};
+            char cheminFichier[100], cheminFichierDot[100], nomEcosysteme[50], climat[50];
             Sommet *sommets = NULL;
             Arc *arcs = NULL;
             int nbSommets, nbArcs;
 
             if (choix == 4) {
+                // Option pour charger un fichier personnalisé
                 printf("\nEntrez le chemin du fichier a charger : ");
                 scanf("%s", cheminFichier);
+                printf("\nEntrez le chemin du fichier DOT associe : ");
+                scanf("%s", cheminFichierDot);
             } else {
+                // Fichiers prédéfinis
                 strcpy(cheminFichier, fichiers[choix - 1]);
+                strcpy(cheminFichierDot, fichiersDot[choix - 1]);
             }
 
             // Lecture du graphe
             lireGraphe(cheminFichier, nomEcosysteme, climat, &sommets, &nbSommets, &arcs, &nbArcs);
 
-            // Affichage direct des informations du réseau
+            // Affichage des informations textuelles du réseau
             afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
+
+            // Affichage graphique du fichier DOT
+            afficherGraphiqueDot(cheminFichierDot);
 
             // Accéder au sous-menu
             sousMenuReseau(nomEcosysteme, sommets, nbSommets, arcs, nbArcs);
@@ -383,8 +389,6 @@ void menuPrincipal() {
         }
     } while (choix != 5);
 }
-
-
 
 int main() {
     menuPrincipal();
