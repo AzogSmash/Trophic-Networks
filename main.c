@@ -66,6 +66,9 @@ void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const
                arcs[i].ponderation);
     }
     printf("=========================================\n");
+    printf("\nAppuyez sur Entree pour continuer...\n");
+    getchar();
+    getchar();
 }
 
 
