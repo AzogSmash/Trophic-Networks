@@ -1,28 +1,65 @@
 Savane
-Humide2
-10 15
+Tropical
+21 41
 Lion
-Zebre
-Gnou
-Antilope
 Hyene
-Crocodile
-Girafe
+Buffle d'Afrique
+Chacal
+Zebre
+Guepard
+Gazelle
+Vautour
+Eland
 Leopard
-Autruche
+Python
+Aigle Martial
+Crocodile
+Hippopotame
+Graminees
+Champignon
+Dik-Dik
+Girafe
+Baobabs
+Acacias
 Elephant
-0 1 0.9
-0 2 0.7
-0 3 0.8
-1 4 0.5
-2 4 0.6
-3 4 0.4
-4 5 0.95
-6 3 0.3
-6 7 0.85
-7 2 0.4
-8 3 0.2
-8 9 0.15
-5 0 0.75
-5 6 0.5
-3 7 0.65
+0 1 0.10
+0 2 0.20
+0 3 0.10
+0 4 0.35
+0 5 0.05
+0 6 0.35
+1 7 0.20
+7 1 0.10
+1 2 0.10
+1 4 0.30
+1 6 0.40
+1 9 0.15
+2 14 1.00
+7 3 0.20
+7 8 0.25
+3 1 0.20
+7 9 0.15
+7 6 0.30
+9 3 0.30
+9 8 0.30
+9 6 0.40
+8 14 1.00
+5 6 0.70
+5 4 0.30
+5 10 0.05
+10 4 0.50
+10 6 0.40
+10 12 0.20
+11 4 0.50
+11 6 0.50
+12 6 0.50
+12 13 0.50
+4 14 1.00
+6 14 1.00
+13 14 1.00
+15 14 0.30
+16 19 0.50
+16 14 0.50
+17 19 0.50
+17 18 0.50
+20 18 0.50
