@@ -338,20 +338,28 @@ void menuPrincipal() {
         printf("1. Explorer le reseau de la jungle\n");
         printf("2. Explorer le reseau marin\n");
         printf("3. Explorer le reseau de la savane\n");
-        printf("4. Quitter le programme\n");
+        printf("4. Charger un reseau depuis un fichier\n");
+        printf("5. Quitter le programme\n");
         printf("=========================================\n");
         printf("Votre choix : ");
         scanf("%d", &choix);
 
-        if (choix >= 1 && choix <= 3) {
+        if (choix >= 1 && choix <= 4) {
             const char *fichiers[] = {"jungle.txt", "marin.txt", "savane.txt"};
-            char nomEcosysteme[50], climat[50];
+            char cheminFichier[100], nomEcosysteme[50], climat[50];
             Sommet *sommets = NULL;
             Arc *arcs = NULL;
             int nbSommets, nbArcs;
 
+            if (choix == 4) {
+                printf("\nEntrez le chemin du fichier a charger : ");
+                scanf("%s", cheminFichier);
+            } else {
+                strcpy(cheminFichier, fichiers[choix - 1]);
+            }
+
             // Lecture du graphe
-            lireGraphe(fichiers[choix - 1], nomEcosysteme, climat, &sommets, &nbSommets, &arcs, &nbArcs);
+            lireGraphe(cheminFichier, nomEcosysteme, climat, &sommets, &nbSommets, &arcs, &nbArcs);
 
             // Affichage direct des informations du réseau
             afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
@@ -362,19 +370,20 @@ void menuPrincipal() {
             // Libérer la mémoire
             free(sommets);
             free(arcs);
-        } else if (choix == 4) {
+        } else if (choix == 5) {
             printf("\nMerci d'avoir utilise le programme. Au revoir !\n");
         } else {
             printf("\nChoix invalide. Veuillez reessayer.\n");
         }
 
-        if (choix != 4) {
+        if (choix != 5) {
             printf("\nAppuyez sur Entree pour revenir au menu principal...\n");
             getchar();
             getchar();
         }
-    } while (choix != 4);
+    } while (choix != 5);
 }
+
 
 
 int main() {
