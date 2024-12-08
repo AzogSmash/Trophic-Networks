@@ -43,14 +43,14 @@ void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const
     printf("   Description du reseau trophique : %s\n", nomEcosysteme);
     printf("=========================================\n");
     printf("Climat : %s\n", climat);
-    printf("\nListe des sommets (especes) :\n");
+    printf("\nListe des sommets (especes) :\n");   // On liste les sommets
     for (int i = 0; i < nbSommets; i++) {
         printf("  [%d] %s\n", i, sommets[i].nom);
     }
     printf("\nListe des arcs (interactions) avec ponderations :\n");
     for (int i = 0; i < nbArcs; i++) {
         printf("  - %s -> %s : %.2f\n",
-               sommets[arcs[i].source].nom,
+               sommets[arcs[i].source].nom,              // On liste les arcs avec le noms du premier vers le deuxiéme et puis la pondération
                sommets[arcs[i].destination].nom,
                arcs[i].ponderation);
     }
@@ -62,7 +62,7 @@ void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const
 
 
 // Fonction pour afficher les prédécesseurs et successeurs d'un sommet
-void predecessorsAndSuccessors(int sommetIndex, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
+void SucceseurEtPredeceseur(int sommetIndex, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
     printf("\n--- Informations sur le sommet : %s ---\n", sommets[sommetIndex].nom);
 
     // Liste des prédécesseurs
@@ -374,7 +374,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
 
 
 
-void afficherGraphiqueDot(const char *fichierDot) {
+void DotGraph(const char *fichierDot) {
     char commande[256];
     snprintf(commande, sizeof(commande), "start %s", fichierDot);
     system(commande);
@@ -445,7 +445,7 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
                 printf("\nSelectionnez un sommet (0-%d) : ", nbSommets - 1);
                 scanf("%d", &sommetIndex);
                 if (sommetIndex >= 0 && sommetIndex < nbSommets) {
-                    predecessorsAndSuccessors(sommetIndex, sommets, nbSommets, arcs, nbArcs);
+                    SucceseurEtPredeceseur(sommetIndex, sommets, nbSommets, arcs, nbArcs);
                 } else {
                     printf("\nSommet invalide.\n");
                 }
@@ -527,7 +527,7 @@ void menuPrincipal() {
             afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
 
             // Affichage graphique du fichier DOT
-            afficherGraphiqueDot(cheminFichierDot);
+            DotGraph(cheminFichierDot);
 
             // Accéder au sous-menu
             sousMenuReseau(nomEcosysteme, sommets, nbSommets, arcs, nbArcs);
