@@ -10,7 +10,7 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
         exit(1);
     }
 
-    // Lecture du nom de l'écosystème et du climat
+    // Lecture du nom de l'ecosystème et du climat
     fgets(nomEcosysteme, 50, fichier);
     nomEcosysteme[strcspn(nomEcosysteme, "\n")] = '\0';
     fgets(climat, 50, fichier);
@@ -19,8 +19,8 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
     // Lecture du nombre de sommets et d'arcs
     fscanf(fichier, "%d %d\n", nbSommets, nbArcs);
 
-    // Allocation mémoire pour les sommets et les arcs
-    *sommets = (Sommet *)malloc(*nbSommets * sizeof(Sommet)); //Alloue dynamiquement de la mémoire pour un tableau de *nbSommets structures de type Sommet
+    // Allocation memoire pour les sommets et les arcs
+    *sommets = (Sommet *)malloc(*nbSommets * sizeof(Sommet)); //Alloue dynamiquement de la memoire pour un tableau de *nbSommets structures de type Sommet
     *arcs = (Arc *)malloc(*nbArcs * sizeof(Arc));
 
     // Lecture des sommets
@@ -50,7 +50,7 @@ void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const
     printf("\nListe des arcs (interactions) avec ponderations :\n");
     for (int i = 0; i < nbArcs; i++) {
         printf("  - %s -> %s : %.2f\n",
-               sommets[arcs[i].source].nom,              // On liste les arcs avec le noms du premier vers le deuxiéme et puis la pondération
+               sommets[arcs[i].source].nom,              // On liste les arcs avec le noms du premier vers le deuxieme et puis la ponderation
                sommets[arcs[i].destination].nom,
                arcs[i].ponderation);
     }
@@ -61,95 +61,95 @@ void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const
 }
 
 
-// Fonction pour afficher les prédécesseurs et successeurs d'un sommet
+// Fonction pour afficher les predecesseurs et successeurs d'un sommet
 void SucceseurEtPredeceseur(int sommetIndex, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
     printf("\n--- Informations sur le sommet : %s ---\n", sommets[sommetIndex].nom);
 
-    // Liste des prédécesseurs
+    // Liste des predecesseurs
     printf("Predecesseurs :\n");
-    int hasPredecessors = 0;
+    int hasPredecesseurs = 0;
     for (int i = 0; i < nbArcs; i++) {
         if (arcs[i].destination == sommetIndex) {
             printf("  - %s\n", sommets[arcs[i].source].nom);
-            hasPredecessors = 1;
+            hasPredecesseurs = 1;
         }
     }
-    if (!hasPredecessors) {
+    if (!hasPredecesseurs) {
         printf("  Aucun\n");
     }
 
     // Liste des successeurs
     printf("Successeurs :\n");
-    int hasSuccessors = 0;
+    int hasSuccesseurs = 0;
     for (int i = 0; i < nbArcs; i++) {
         if (arcs[i].source == sommetIndex) {
             printf("  - %s\n", sommets[arcs[i].destination].nom);
-            hasSuccessors = 1;
+            hasSuccesseurs = 1;
         }
     }
-    if (!hasSuccessors) {
+    if (!hasSuccesseurs) {
         printf("  Aucun\n");
     }
 }
 
-// Fonction pour calculer la complexité du graphe
+// Fonction pour calculer la complexite du graphe
 void calculerComplexite(int nbSommets, int nbArcs) {
     printf("\n--- Statistiques du graphe ---\n");
     printf("Nombre d'especes : %d\n", nbSommets);
     printf("Nombre de liaisons : %d\n", nbArcs);
 
-    // Densité de liaison = arcs / (sommets * (sommets - 1))
+    // Densite de liaison = arcs / (sommets * (sommets - 1))
     float densite = (float) nbArcs / (nbSommets * (nbSommets - 1));
     printf("Densite de liaison : %.2f\n", densite);
 }
 
-// Fonction pour analyser les caractéristiques particulières du graphe
+// Fonction pour analyser les caracteristiques particulières du graphe
 void analyserGraphe(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
-    int *predCount = (int *)calloc(nbSommets, sizeof(int)); // Compte les prédécesseurs
+    int *predCount = (int *)calloc(nbSommets, sizeof(int)); // Compte les predecesseurs
     int *succCount = (int *)calloc(nbSommets, sizeof(int)); // Compte les successeurs
 
     // Parcourir les arcs pour remplir les compteurs
     for (int i = 0; i < nbArcs; i++) {
-        predCount[arcs[i].destination]++; // La destination a un prédateur
+        predCount[arcs[i].destination]++; // La destination a un predateur
         succCount[arcs[i].source]++;      // La source a une proie
     }
 
     // 1. Producteurs primaires
     printf("\n--- Producteurs primaires ---\n");
-    int found = 0;
+    int trouve = 0;
     for (int i = 0; i < nbSommets; i++) {
         if (succCount[i] == 0) {
             printf("  - %s\n", sommets[i].nom);
-            found = 1;
+            trouve = 1;
         }
     }
-    if (!found) printf("  Aucun\n");
+    if (!trouve) printf("  Aucun\n");
 
-    // 2. Super-prédateurs
+    // 2. Super-predateurs
     printf("\n--- Super-predateurs ---\n");
-    found = 0;
+    trouve = 0;
     for (int i = 0; i < nbSommets; i++) {
         if (predCount[i] == 0) {
             printf("  - %s\n", sommets[i].nom);
-            found = 1;
+            trouve = 1;
         }
     }
-    if (!found) printf("  Aucun\n");
+    if (!trouve) printf("  Aucun\n");
 
     // 3. Une seule source de nourriture
     printf("\n--- Especes avec une seule source de nourriture ---\n");
-    found = 0;
+    trouve = 0;
     for (int i = 0; i < nbSommets; i++) {
         if (succCount[i] == 1) {
             printf("  - %s\n", sommets[i].nom);
-            found = 1;
+            trouve = 1;
         }
     }
-    if (!found) printf("  Aucune\n");
+    if (!trouve) printf("  Aucune\n");
 
-    // 4. Proies partagées
+    // 4. Proies partagees
     printf("\n--- Proies partagees par plusieurs predateurs ---\n");
-    found = 0;
+    trouve = 0;
     for (int i = 0; i < nbSommets; i++) {
         int predatorCount = 0;
         for (int j = 0; j < nbArcs; j++) {
@@ -158,7 +158,7 @@ void analyserGraphe(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
             }
         }
         if (predatorCount >= 2) {
-            found = 1;
+            trouve = 1;
             printf("%s est consomme par :\n", sommets[i].nom);
             for (int j = 0; j < nbArcs; j++) {
                 if (arcs[j].destination == i) {
@@ -167,7 +167,7 @@ void analyserGraphe(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
             }
         }
     }
-    if (!found) printf("  Aucune\n");
+    if (!trouve) printf("  Aucune\n");
 
 
     free(predCount);
@@ -175,7 +175,7 @@ void analyserGraphe(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
 }
 // Fonction DFS pour explorer les sommets atteignables
 void dfs(int sommet, int *visite, Arc *arcs, int nbArcs, int nbSommets) {
-    visite[sommet] = 1; // Marque le sommet comme visité
+    visite[sommet] = 1; // Marque le sommet comme visite
 
     // Parcourir tous les arcs pour trouver les voisins du sommet actuel
     for (int i = 0; i < nbArcs; i++) {
@@ -185,7 +185,7 @@ void dfs(int sommet, int *visite, Arc *arcs, int nbArcs, int nbSommets) {
                 dfs(voisin, visite, arcs, nbArcs, nbSommets); // Explorer le voisin
             }
         } else if (arcs[i].destination == sommet) {
-            // Si le graphe est non orienté, considérer aussi les arcs inverses
+            // Si le graphe est non oriente, considerer aussi les arcs inverses
             int voisin = arcs[i].source;
             if (!visite[voisin]) {
                 dfs(voisin, visite, arcs, nbArcs, nbSommets); // Explorer le voisin
@@ -195,39 +195,39 @@ void dfs(int sommet, int *visite, Arc *arcs, int nbArcs, int nbSommets) {
 }
 
 
-// Fonction pour vérifier la connexité du graphe
+// Fonction pour verifier la connexite du graphe
 int verifierConnexite(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
     int *visite = (int *)calloc(nbSommets, sizeof(int)); // Tableau de visite pour les sommets
 
     // Lancer DFS à partir du sommet 0
     dfs(0, visite, arcs, nbArcs, nbSommets);
 
-    // Vérifier si tous les sommets ont été visités
+    // Verifier si tous les sommets ont ete visites
     for (int i = 0; i < nbSommets; i++) {
         if (!visite[i]) {
             free(visite);
-            return 0; // Si un sommet n'est pas visité, le graphe n'est pas connexe
+            return 0; // Si un sommet n'est pas visite, le graphe n'est pas connexe
         }
     }
 
     free(visite);
-    return 1; // Si tous les sommets ont été visités, le graphe est connexe
+    return 1; // Si tous les sommets ont ete visites, le graphe est connexe
 }
 // Fonction pour simuler la dynamique de population d'une espèce
 void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int iterations) {
     printf("\n--- Simulation pour l'espèce : %s ---\n", sommet->nom);
     printf("Population initiale (N0) : %.2f\n", N0);
     printf("Taux de croissance (r) : %.2f\n", r);
-    printf("Capacité de charge (K) : %.2f\n", K);
-    printf("Nombre d'itérations : %d\n\n", iterations);
+    printf("Capacite de charge (K) : %.2f\n", K);
+    printf("Nombre d'iterations : %d\n\n", iterations);
 
     float N = N0; // Population initiale
-    printf("Itération\tPopulation (N)\n");
+    printf("Iteration\tPopulation (N)\n");
     printf("--------------------------------\n");
 
     for (int t = 0; t <= iterations; t++) {
         printf("%d\t\t%.2f\n", t, N);
-        N = N + r * N * (1 - N / K); // Équation phare pour la dynamique de population
+        N = N + r * N * (1 - N / K); // equation phare pour la dynamique de population
         if (N < 0) {
             N = 0; // Extinction
             break;
@@ -242,17 +242,17 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
     // Demander à l'utilisateur de choisir le type de simulation
     printf("\n--- Choisissez le mode de simulation ---\n");
     printf("1. Saisie manuelle des paramètres\n");
-    printf("2. Utiliser des paramètres prédéfinis\n");
+    printf("2. Utiliser des paramètres predefinis\n");
     printf("Votre choix : ");
     scanf("%d", &choixSimulation);
 
-    // Déclaration des tableaux de paramètres
+    // Declaration des tableaux de paramètres
     float *populations = (float *)malloc(nbSommets * sizeof(float));
     float *tauxCroissance = (float *)malloc(nbSommets * sizeof(float));
     float *capaciteCharge = (float *)malloc(nbSommets * sizeof(float));
 
     if (!populations || !tauxCroissance || !capaciteCharge) {
-        printf("Erreur : allocation mémoire pour les paramètres.\n");
+        printf("Erreur : allocation memoire pour les paramètres.\n");
         exit(1);
     }
 
@@ -262,7 +262,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
         for (int i = 0; i < nbSommets; i++) {
             printf("Entrez la population initiale pour l'espece '%s' : ", sommets[i].nom);
             scanf("%f", &populations[i]);
-            if (populations[i] < 0) populations[i] = 0;  // Pas de valeurs négatives
+            if (populations[i] < 0) populations[i] = 0;  // Pas de valeurs negatives
 
             printf("Entrez le taux de croissance (r) pour l'espece '%s' : ", sommets[i].nom);
             scanf("%f", &tauxCroissance[i]);
@@ -271,7 +271,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             scanf("%f", &capaciteCharge[i]);
         }
     } else if (choixSimulation == 2) {
-        printf("\n--- Paramètres prédéfinis appliqués ---\n");
+        printf("\n--- Paramètres predefinis appliques ---\n");
         float valeursPopulations[] = {100, 50, 200, 150, 80, 70, 90, 120, 300, 250};
         float valeursTauxCroissance[] = {0.1, 0.05, 0.15, 0.2, 0.12, 0.08, 0.1, 0.09, 0.07, 0.06};
         float valeursCapaciteCharge[] = {500, 300, 700, 600, 400, 350, 450, 550, 800, 750};
@@ -285,31 +285,31 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
                    sommets[i].nom, populations[i], tauxCroissance[i], capaciteCharge[i]);
         }
     } else {
-        printf("\nChoix invalide. Retour au menu précédent.\n");
+        printf("\nChoix invalide. Retour au menu precedent.\n");
         free(populations);
         free(tauxCroissance);
         free(capaciteCharge);
         return;
     }
 
-    // Ouvrir le fichier de données pour Gnuplot
+    // Ouvrir le fichier de donnees pour Gnuplot
     FILE *fichierDonnees = fopen("simulation_data.txt", "w");
     if (!fichierDonnees) {
-        printf("Erreur : Impossible de créer le fichier de données.\n");
+        printf("Erreur : Impossible de creer le fichier de donnees.\n");
         free(populations);
         free(tauxCroissance);
         free(capaciteCharge);
         return;
     }
 
-    // Ajouter les entêtes au fichier de données
+    // Ajouter les entêtes au fichier de donnees
     fprintf(fichierDonnees, "Iteration");
     for (int i = 0; i < nbSommets; i++) {
         fprintf(fichierDonnees, "\t%s", sommets[i].nom);
     }
     fprintf(fichierDonnees, "\n");
 
-    // Simulation des itérations
+    // Simulation des iterations
     for (int t = 0; t <= iterations; t++) {
         fprintf(fichierDonnees, "%d", t);
 
@@ -322,7 +322,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
         for (int i = 0; i < nbSommets; i++) {
             populations[i] += tauxCroissance[i] * populations[i] *
                               (1 - populations[i] / capaciteCharge[i]);
-            if (populations[i] < 0) populations[i] = 0; // Éviter des valeurs négatives
+            if (populations[i] < 0) populations[i] = 0; // eviter des valeurs negatives
         }
 
         // Appliquer les interactions trophiques
@@ -330,26 +330,26 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             int source = arcs[i].source;
             int destination = arcs[i].destination;
 
-            // Impact de la prédation (pondéré par l'arc)
+            // Impact de la predation (pondere par l'arc)
             float impact = arcs[i].ponderation * populations[source];
             populations[destination] -= impact;
             if (populations[destination] < 0) populations[destination] = 0;
 
-            // Conversion partielle en croissance pour le prédateur
-            populations[source] += impact * 0.1;  // Coefficient d'efficacité trophique
+            // Conversion partielle en croissance pour le predateur
+            populations[source] += impact * 0.1;  // Coefficient d'efficacite trophique
         }
     }
 
     fclose(fichierDonnees);
 
-    // Libérer la mémoire
+    // Liberer la memoire
     free(populations);
     free(tauxCroissance);
     free(capaciteCharge);
 
-    // Génération du graphique avec Gnuplot
+    // Generation du graphique avec Gnuplot
     printf("\n--- Fin de la simulation ---\n");
-    printf("\nGénération des graphiques avec Gnuplot...\n");
+    printf("\nGeneration des graphiques avec Gnuplot...\n");
 
     FILE *gnuplot = popen("gnuplot -persistent", "w");
     if (!gnuplot) {
@@ -358,7 +358,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
     }
 
     // Configuration de Gnuplot pour tracer les courbes
-    fprintf(gnuplot, "set title 'Évolution des populations'\n");
+    fprintf(gnuplot, "set title 'evolution des populations'\n");
     fprintf(gnuplot, "set xlabel 'Iterations'\n");
     fprintf(gnuplot, "set ylabel 'Population'\n");
     fprintf(gnuplot, "set grid\n");
@@ -409,7 +409,7 @@ void sousMenuDemiDegres(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
         printf("\nSommet invalide.\n");
     }
 
-    printf("\nAppuyez sur Entrée pour continuer...\n");
+    printf("\nAppuyez sur Entree pour continuer...\n");
     getchar();
     getchar();
 }
@@ -420,7 +420,7 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
     int sousChoix;
 
     do {
-        system("cls"); // Nettoyer l'écran pour Windows
+        system("cls"); // Nettoyer l'ecran pour Windows
 
         printf("=========================================\n");
         printf("        Menu du reseau : %s\n", nomEcosysteme);
@@ -486,7 +486,7 @@ void menuPrincipal() {
     int choix;
 
     do {
-        system("cls"); // Nettoyer l'écran pour Windows
+        system("cls"); // Nettoyer l'ecran pour Windows
 
         printf("=========================================\n");
         printf("        Programme Trophic Networks       \n");
@@ -509,13 +509,13 @@ void menuPrincipal() {
             int nbSommets, nbArcs;
 
             if (choix == 4) {
-                // Option pour charger un fichier personnalisé
+                // Option pour charger un fichier personnalise
                 printf("\nEntrez le chemin du fichier a charger : ");
                 scanf("%s", cheminFichier);
                 printf("\nEntrez le chemin du fichier DOT associe : ");
                 scanf("%s", cheminFichierDot);
             } else {
-                // Fichiers prédéfinis
+                // Fichiers predefinis
                 strcpy(cheminFichier, fichiers[choix - 1]);
                 strcpy(cheminFichierDot, fichiersDot[choix - 1]);
             }
@@ -523,16 +523,16 @@ void menuPrincipal() {
             // Lecture du graphe
             lireGraphe(cheminFichier, nomEcosysteme, climat, &sommets, &nbSommets, &arcs, &nbArcs);
 
-            // Affichage des informations textuelles du réseau
+            // Affichage des informations textuelles du reseau
             afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
 
             // Affichage graphique du fichier DOT
             DotGraph(cheminFichierDot);
 
-            // Accéder au sous-menu
+            // Acceder au sous-menu
             sousMenuReseau(nomEcosysteme, sommets, nbSommets, arcs, nbArcs);
 
-            // Libérer la mémoire
+            // Liberer la memoire
             free(sommets);
             free(arcs);
         } else if (choix == 5) {
