@@ -55,7 +55,7 @@ des informations sur les espèces, de vérifier la connexité du réseau, et de 
         espèce dans un écosystème spécifique et de visualiser des effets tels que des cascades trophiques
         ou des oscillations dans les populations.
 
-  ## FONCTIONNALITES
+  ## FONCTIONNALITE
   
        La modélisation des réseaux trophiques pour divers écosystèmes, tels que l'Amazonie, l'Océanie et la savane africaine, permet d'analyser les dynamiques 
       de population et leurs impacts écologiques. Cette approche utilise une équation de croissance logistique pour simuler les variations de population.
