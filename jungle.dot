@@ -1,0 +1,48 @@
+digraph Amazonie {
+    // Définir les couleurs des sommets (niveaux trophiques)
+    // Niveau 1 (Producteurs primaires) - Vert
+    Bromeliacee [color=green, label="Bromeliacée\nNiveau 1"];
+Hevea [color=green, label="Hevea\nNiveau 1"];
+
+// Niveau 2 (Consommateurs primaires) - Jaune
+    Escargot_Terrestre [color=yellow, label="Escargot Terrestre\nNiveau 2"];
+Grenouille_Dendrobate [color=yellow, label="Grenouille Dendrobate\nNiveau 2"];
+Capybara [color=yellow, label="Capybara\nNiveau 2"];
+
+// Niveau 3 (Consommateurs secondaires) - Orange
+    Toucan [color=orange, label="Toucan\nNiveau 3"];
+Araignee_Loup [color=orange, label="Araignée Loup\nNiveau 3"];
+Fourmi_Coupe_Feuille [color=orange, label="Fourmi Coupe Feuille\nNiveau 3"];
+
+// Niveau 4 (Consommateurs tertiaires) - Rouge
+    Serpent_Boa [color=red, label="Serpent Boa\nNiveau 4"];
+Jaguar [color=red, label="Jaguar\nNiveau 4"];
+
+// Arcs (interactions)
+    Jaguar -> Serpent_Boa [label="1.00"];
+Serpent_Boa -> Toucan [label="1.00"];
+Toucan -> Escargot_Terrestre [label="0.50"];
+Toucan -> Grenouille_Dendrobate [label="0.50"];
+Araignee_Loup -> Escargot_Terrestre [label="0.50"];
+Araignee_Loup -> Fourmi_Coupe_Feuille [label="0.50"];
+Grenouille_Dendrobate -> Fourmi_Coupe_Feuille [label="0.50"];
+Escargot_Terrestre -> Bromeliacee [label="0.50"];
+Capybara -> Bromeliacee [label="0.50"];
+Fourmi_Coupe_Feuille -> Hevea [label="1.00"];
+
+// Création d'une légende
+    subgraph cluster_legend {
+label="Légende";
+style=dashed;
+node [shape=plaintext];
+
+// Légende avec les couleurs et les niveaux trophiques
+        legend_table [label="1. Niveau 1: Producteurs primaires\n2. Niveau 2: Consommateurs primaires\n3. Niveau 3: Consommateurs secondaires\n4. Niveau 4: Consommateurs tertiaires", shape=rect, style=dotted];
+
+// Légende colorée
+        level1 [label="Niveau 1", style=filled, fillcolor=green, width=0.2];
+level2 [label="Niveau 2", style=filled, fillcolor=yellow, width=0.2];
+level3 [label="Niveau 3", style=filled, fillcolor=orange, width=0.2];
+level4 [label="Niveau 4", style=filled, fillcolor=red, width=0.2];
+}
+}
