@@ -238,54 +238,92 @@ void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int 
 
 // Fonction pour simuler la dynamique des populations dans tout le réseau trophique
 void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, int iterations) {
-    // Afficher les paramètres
-    printf("\n--- Simulation globale des populations ---\n");
-    printf("Nombre d'iterations : %d\n", iterations);
-    printf("Nombre d'especes : %d\n", nbSommets);
-    printf("Nombre d'interactions : %d\n\n", nbArcs);
+    int choixSimulation;
 
-    // Tableau pour les populations courantes (N_t)
+    // Demander à l'utilisateur de choisir le type de simulation
+    printf("\n--- Choisissez le mode de simulation ---\n");
+    printf("1. Saisie manuelle des paramètres\n");
+    printf("2. Utiliser des paramètres predefinis\n");
+    printf("Votre choix : ");
+    scanf("%d", &choixSimulation);
+
+    // Declaration des tableaux de paramètres
     float *populations = (float *)malloc(nbSommets * sizeof(float));
-    if (!populations) {
-        printf("Erreur : allocation mémoire pour les populations.\n");
-        exit(1);
-    }
-
-    // Initialisation des populations
-    for (int i = 0; i < nbSommets; i++) {
-        printf("Entrez la population initiale pour l'espece '%s' : ", sommets[i].nom);
-         // Demander à l'utilisateur de saisir la population initiale pour l'espèce spécifiée
-        scanf("%f", &populations[i]);
-        if (populations[i] < 0) populations[i] = 0; // Éviter les valeurs négatives
-    }
-
-    // Tableau des paramètres biologiques (r et K pour chaque espèce)
     float *tauxCroissance = (float *)malloc(nbSommets * sizeof(float));
     float *capaciteCharge = (float *)malloc(nbSommets * sizeof(float));
-    if (!tauxCroissance || !capaciteCharge) {
-        printf("Erreur : allocation mémoire pour les paramètres biologiques.\n");
-        free(populations);
+
+    if (!populations || !tauxCroissance || !capaciteCharge) {
+        printf("Erreur : allocation memoire pour les paramètres.\n");
         exit(1);
     }
 
-    for (int i = 0; i < nbSommets; i++) {
-        printf("Entrez le taux de croissance (r) pour l'espece '%s' : ", sommets[i].nom);
-        scanf("%f", &tauxCroissance[i]);
-        printf("Entrez la capacite de charge (K) pour l'espece '%s' : ", sommets[i].nom);
-        scanf("%f", &capaciteCharge[i]);
+    // Initialisation des paramètres
+    if (choixSimulation == 1) {
+        printf("\n--- Saisie manuelle des paramètres ---\n");
+        for (int i = 0; i < nbSommets; i++) {
+            printf("Entrez la population initiale pour l'espece '%s' : ", sommets[i].nom);
+            scanf("%f", &populations[i]);
+            if (populations[i] < 0) populations[i] = 0;  // Pas de valeurs negatives
+
+            printf("Entrez le taux de croissance (r) pour l'espece '%s' : ", sommets[i].nom);
+            scanf("%f", &tauxCroissance[i]);
+
+            printf("Entrez la capacite de charge (K) pour l'espece '%s' : ", sommets[i].nom);
+            scanf("%f", &capaciteCharge[i]);
+        }
+    } else if (choixSimulation == 2) {
+        printf("\n--- Paramètres predefinis appliques ---\n");
+        float valeursPopulations[] = {100, 50, 200, 150, 80, 70, 90, 120, 300, 250};
+        float valeursTauxCroissance[] = {0.1, 0.05, 0.15, 0.2, 0.12, 0.08, 0.1, 0.09, 0.07, 0.06};
+        float valeursCapaciteCharge[] = {500, 300, 700, 600, 400, 350, 450, 550, 800, 750};
+
+        for (int i = 0; i < nbSommets; i++) {
+            populations[i] = valeursPopulations[i % 10];
+            tauxCroissance[i] = valeursTauxCroissance[i % 10];
+            capaciteCharge[i] = valeursCapaciteCharge[i % 10];
+
+            printf("  %s : Pop=%.2f, r=%.2f, K=%.2f\n", 
+                   sommets[i].nom, populations[i], tauxCroissance[i], capaciteCharge[i]);
+        }
+    } else {
+        printf("\nChoix invalide. Retour au menu precedent.\n");
+        free(populations);
+        free(tauxCroissance);
+        free(capaciteCharge);
+        return;
     }
 
-    // Simulation des itérations
+    // Ouvrir le fichier de donnees pour Gnuplot
+    FILE *fichierDonnees = fopen("simulation_data.txt", "w");
+    if (!fichierDonnees) {
+        printf("Erreur : Impossible de creer le fichier de donnees.\n");
+        free(populations);
+        free(tauxCroissance);
+        free(capaciteCharge);
+        return;
+    }
+
+    // Ajouter les entêtes au fichier de donnees
+    fprintf(fichierDonnees, "Iteration");
+    for (int i = 0; i < nbSommets; i++) {
+        fprintf(fichierDonnees, "\t%s", sommets[i].nom);
+    }
+    fprintf(fichierDonnees, "\n");
+
+    // Simulation des iterations
     for (int t = 0; t <= iterations; t++) {
-        printf("\nIteration %d\n", t);
-        printf("--------------------\n");
+        fprintf(fichierDonnees, "%d", t);
+
+        for (int i = 0; i < nbSommets; i++) {
+            fprintf(fichierDonnees, "\t%.2f", populations[i]);
+        }
+        fprintf(fichierDonnees, "\n");
 
         // Mise à jour des populations selon la dynamique logistique
         for (int i = 0; i < nbSommets; i++) {
             populations[i] += tauxCroissance[i] * populations[i] *
                               (1 - populations[i] / capaciteCharge[i]);
-            if (populations[i] < 0) populations[i] = 0; // Éviter des valeurs négatives
-            printf("  %s : %.2f\n", sommets[i].nom, populations[i]);
+            if (populations[i] < 0) populations[i] = 0; // eviter des valeurs negatives
         }
 
         // Appliquer les interactions trophiques
@@ -293,15 +331,10 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             int source = arcs[i].source;
             int destination = arcs[i].destination;
 
-            // Impact de la prédation (pondéré par l'arc)
+            // Impact de la predation (pondere par l'arc)
             float impact = arcs[i].ponderation * populations[source];
             populations[destination] -= impact;
             if (populations[destination] < 0) populations[destination] = 0;
-
-            // Conversion partielle en croissance pour le prédateur
-            populations[source] += impact * 0.1; // Coefficient d'efficacité trophique
-        }
-    }
 
     // Libération des mémoires
     free(populations);
