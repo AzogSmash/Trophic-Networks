@@ -32,17 +32,40 @@ PREREQUIS:
 
   SIMULATION DYNAMIQUE
 
-        Nous avons choisi deux approches pour la simulation dynamique :
+        Nous avons choisi deux approches pour la simulation dynamique : 
         
-        - 1. Simulation avec des paramètres prédéfinis - Cette méthode utilise des valeurs prédéterminées pour No (population initiale),
-        r (taux de croissance) et K (capacité de charge). Ces valeurs ont été établies à partir de recherches approfondies, notamment en 
-        analysant les proportions relatives entre les différentes espèces. L'objectif est de reproduire au mieux la réalité, avec des
-        paramètres qui se rapprochent autant que possible des conditions naturelles. 
+        1. Simulation avec des paramètres prédéfinis - Cette méthode utilise des valeurs prédéterminées
+        pour No (population initiale), r (taux de croissance) et K (capacité de charge). Ces valeurs ont
+        été établies à partir de recherches approfondies. Par exemple, pour K, nous avons pris en compte 
+        la disponibilité des ressources nécessaires à chaque espèce, comme la biomasse des producteurs
+        primaires ou l’espace disponible pour les grands prédateurs. Pour r, nous nous sommes basés sur
+        des données biologiques, telles que les taux de reproduction observés, les cycles de vie des espèces,
+        et leur capacité à se réguler dans des conditions naturelles. L'objectif est de reproduire au mieux
+        la réalité, avec des paramètres qui reflètent les dynamiques écologiques naturelles.
         
-        - 2. Simulation manuelle pour explorer différents scénarios - Cette méthode permet de modifier manuellement les paramètres No,
-        K ou r afin d'examiner leur influence sur le résultat attendu. Elle offre la possibilité de simuler des extinctions ou des
-        disparitions partielles de certaines espèces et d'observer leurs répercussions sur une période donnée. Cela permet d'évaluer
-        l'importance relative d'une espèce dans un écosystème spécifique.
+        
+        2. Simulation manuelle pour explorer différents scénarios - Cette méthode permet de modifier
+        manuellement les paramètres No, K ou r afin d'examiner leur influence sur le résultat attendu.
+        Par exemple, en augmentant K pour une espèce prédatrice, on pourrait simuler une augmentation 
+        des ressources disponibles, comme une abondance soudaine de proies. Inversement, en réduisant r
+        pour un producteur primaire, on pourrait modéliser l’impact de conditions environnementales
+        défavorables, comme une sécheresse. Cette approche offre également la possibilité de simuler
+        des extinctions ou des disparitions partielles de certaines espèces pour observer leurs 
+        répercussions sur une période donnée. Cela permet d'évaluer l'importance relative d'une
+        espèce dans un écosystème spécifique et de visualiser des effets tels que des cascades trophiques
+        ou des oscillations dans les populations.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
