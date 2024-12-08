@@ -11,4 +11,4 @@ des informations sur les espèces, de vérifier la connexité du réseau, et de 
 PREREQUIS:
 
     -Langage : C
-    -Plugin : DOT language sur Clion
+    -Plugin sur Clion : DOT language 
