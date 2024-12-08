@@ -47,7 +47,7 @@ int verifierConnexite(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs);
 void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int iterations);
 
 // Fonction (kais) pour simuler la dynamique de population
-void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, int iterations)
+void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, int iterations);
 // Intégration dans le menu
 void simulationMenu(Sommet *sommets, int nbSommets);
 
