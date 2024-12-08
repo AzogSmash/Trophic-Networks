@@ -252,13 +252,13 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
     float *capaciteCharge = (float *)malloc(nbSommets * sizeof(float));
 
     if (!populations || !tauxCroissance || !capaciteCharge) {
-        printf("Erreur : allocation memoire pour les paramètres.\n");
+        printf("Erreur : allocation memoire pour les parametres.\n");
         exit(1);
     }
 
     // Initialisation des paramètres
     if (choixSimulation == 1) {
-        printf("\n--- Saisie manuelle des paramètres ---\n");
+        printf("\n--- Saisie manuelle des parametres ---\n");
         for (int i = 0; i < nbSommets; i++) {
             printf("Entrez la population initiale pour l'espece '%s' : ", sommets[i].nom);
             scanf("%f", &populations[i]);
