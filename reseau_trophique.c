@@ -236,24 +236,23 @@ void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int 
 }
 
 
-// Fonction pour simuler la dynamique des populations dans tout le réseau trophique
 void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, int iterations) {
     int choixSimulation;
 
     // Demander à l'utilisateur de choisir le type de simulation
     printf("\n--- Choisissez le mode de simulation ---\n");
     printf("1. Saisie manuelle des paramètres\n");
-    printf("2. Utiliser des paramètres predefinis\n");
+    printf("2. Utiliser des paramètres prédéfinis\n");
     printf("Votre choix : ");
     scanf("%d", &choixSimulation);
 
-    // Declaration des tableaux de paramètres
-    float *populations = (float *) malloc(nbSommets * sizeof(float));
-    float *tauxCroissance = (float *) malloc(nbSommets * sizeof(float));
-    float *capaciteCharge = (float *) malloc(nbSommets * sizeof(float));
+    // Déclaration des tableaux de paramètres
+    float *populations = (float *)malloc(nbSommets * sizeof(float));
+    float *tauxCroissance = (float *)malloc(nbSommets * sizeof(float));
+    float *capaciteCharge = (float *)malloc(nbSommets * sizeof(float));
 
     if (!populations || !tauxCroissance || !capaciteCharge) {
-        printf("Erreur : allocation memoire pour les paramètres.\n");
+        printf("Erreur : allocation mémoire pour les paramètres.\n");
         exit(1);
     }
 
@@ -263,7 +262,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
         for (int i = 0; i < nbSommets; i++) {
             printf("Entrez la population initiale pour l'espece '%s' : ", sommets[i].nom);
             scanf("%f", &populations[i]);
-            if (populations[i] < 0) populations[i] = 0;  // Pas de valeurs negatives
+            if (populations[i] < 0) populations[i] = 0;  // Pas de valeurs négatives
 
             printf("Entrez le taux de croissance (r) pour l'espece '%s' : ", sommets[i].nom);
             scanf("%f", &tauxCroissance[i]);
@@ -272,7 +271,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             scanf("%f", &capaciteCharge[i]);
         }
     } else if (choixSimulation == 2) {
-        printf("\n--- Paramètres predefinis appliques ---\n");
+        printf("\n--- Paramètres prédéfinis appliqués ---\n");
         float valeursPopulations[] = {100, 50, 200, 150, 80, 70, 90, 120, 300, 250};
         float valeursTauxCroissance[] = {0.1, 0.05, 0.15, 0.2, 0.12, 0.08, 0.1, 0.09, 0.07, 0.06};
         float valeursCapaciteCharge[] = {500, 300, 700, 600, 400, 350, 450, 550, 800, 750};
@@ -286,31 +285,31 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
                    sommets[i].nom, populations[i], tauxCroissance[i], capaciteCharge[i]);
         }
     } else {
-        printf("\nChoix invalide. Retour au menu precedent.\n");
+        printf("\nChoix invalide. Retour au menu précédent.\n");
         free(populations);
         free(tauxCroissance);
         free(capaciteCharge);
         return;
     }
 
-    // Ouvrir le fichier de donnees pour Gnuplot
+    // Ouvrir le fichier de données pour Gnuplot
     FILE *fichierDonnees = fopen("simulation_data.txt", "w");
     if (!fichierDonnees) {
-        printf("Erreur : Impossible de creer le fichier de donnees.\n");
+        printf("Erreur : Impossible de créer le fichier de données.\n");
         free(populations);
         free(tauxCroissance);
         free(capaciteCharge);
         return;
     }
 
-    // Ajouter les entêtes au fichier de donnees
+    // Ajouter les entêtes au fichier de données
     fprintf(fichierDonnees, "Iteration");
     for (int i = 0; i < nbSommets; i++) {
         fprintf(fichierDonnees, "\t%s", sommets[i].nom);
     }
     fprintf(fichierDonnees, "\n");
 
-    // Simulation des iterations
+    // Simulation des itérations
     for (int t = 0; t <= iterations; t++) {
         fprintf(fichierDonnees, "%d", t);
 
@@ -323,7 +322,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
         for (int i = 0; i < nbSommets; i++) {
             populations[i] += tauxCroissance[i] * populations[i] *
                               (1 - populations[i] / capaciteCharge[i]);
-            if (populations[i] < 0) populations[i] = 0; // eviter des valeurs negatives
+            if (populations[i] < 0) populations[i] = 0; // Éviter des valeurs négatives
         }
 
         // Appliquer les interactions trophiques
@@ -331,20 +330,47 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             int source = arcs[i].source;
             int destination = arcs[i].destination;
 
-            // Impact de la predation (pondere par l'arc)
+            // Impact de la prédation (pondéré par l'arc)
             float impact = arcs[i].ponderation * populations[source];
             populations[destination] -= impact;
             if (populations[destination] < 0) populations[destination] = 0;
 
-            // Libération des mémoires
-            free(populations);
-            free(tauxCroissance);
-            free(capaciteCharge);
-
-            printf("\n--- Fin de la simulation ---\n");
+            // Conversion partielle en croissance pour le prédateur
+            populations[source] += impact * 0.1;  // Coefficient d'efficacité trophique
         }
     }
+
+    fclose(fichierDonnees);
+
+    // Libérer la mémoire
+    free(populations);
+    free(tauxCroissance);
+    free(capaciteCharge);
+
+    // Génération du graphique avec Gnuplot
+    printf("\n--- Fin de la simulation ---\n");
+    printf("\nGénération des graphiques avec Gnuplot...\n");
+
+    FILE *gnuplot = popen("gnuplot -persistent", "w");
+    if (!gnuplot) {
+        printf("Erreur : Impossible de lancer Gnuplot.\n");
+        return;
+    }
+
+    // Configuration de Gnuplot pour tracer les courbes
+    fprintf(gnuplot, "set title 'Évolution des populations'\n");
+    fprintf(gnuplot, "set xlabel 'Iterations'\n");
+    fprintf(gnuplot, "set ylabel 'Population'\n");
+    fprintf(gnuplot, "set grid\n");
+    fprintf(gnuplot, "plot");
+    for (int i = 1; i <= nbSommets; i++) {
+        fprintf(gnuplot, " 'simulation_data.txt' using 1:%d with lines title '%s'%s",
+                i + 1, sommets[i - 1].nom, (i == nbSommets) ? "\n" : ",");
+    }
+
+    pclose(gnuplot);
 }
+
 
 
 
