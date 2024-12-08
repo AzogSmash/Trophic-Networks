@@ -234,7 +234,7 @@ void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int 
     }
 }
 
-// Intégration dans le menus
+
 // Fonction pour simuler la dynamique des populations dans tout le réseau trophique
 void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, int iterations) {
     // Afficher les paramètres
