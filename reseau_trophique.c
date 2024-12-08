@@ -174,14 +174,25 @@ void analyserGraphe(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
 }
 // Fonction DFS pour explorer les sommets atteignables
 void dfs(int sommet, int *visite, Arc *arcs, int nbArcs, int nbSommets) {
-    visite[sommet] = 1; // Marquer le sommet comme visité
+    visite[sommet] = 1; // Marque le sommet comme visité
+
+    // Parcourir tous les arcs pour trouver les voisins du sommet actuel
     for (int i = 0; i < nbArcs; i++) {
-        // Si l'arête part du sommet courant et mène à un sommet non visité
-        if (arcs[i].source == sommet && !visite[arcs[i].destination]) {
-            dfs(arcs[i].destination, visite, arcs, nbArcs, nbSommets);
+        if (arcs[i].source == sommet) {
+            int voisin = arcs[i].destination;
+            if (!visite[voisin]) {
+                dfs(voisin, visite, arcs, nbArcs, nbSommets); // Explorer le voisin
+            }
+        } else if (arcs[i].destination == sommet) {
+            // Si le graphe est non orienté, considérer aussi les arcs inverses
+            int voisin = arcs[i].source;
+            if (!visite[voisin]) {
+                dfs(voisin, visite, arcs, nbArcs, nbSommets); // Explorer le voisin
+            }
         }
     }
 }
+
 
 // Fonction pour vérifier la connexité du graphe
 int verifierConnexite(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
