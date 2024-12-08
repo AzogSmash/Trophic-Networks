@@ -38,6 +38,7 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
 }
 
 void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const char *nomEcosysteme, const char *climat) {
+    system("cls");
     printf("\n=========================================\n");
     printf("   Description du reseau trophique : %s\n", nomEcosysteme);
     printf("=========================================\n");
@@ -315,13 +316,48 @@ void afficherGraphiqueDot(const char *fichierDot) {
     snprintf(commande, sizeof(commande), "start %s", fichierDot);
     system(commande);
 }
+void calculerDemiDegres(int sommetIndex, Arc *arcs, int nbArcs, int *demiDegreEntrant, int *demiDegreSortant) {
+    *demiDegreEntrant = 0;
+    *demiDegreSortant = 0;
+
+    for (int i = 0; i < nbArcs; i++) {
+        if (arcs[i].destination == sommetIndex) {
+            (*demiDegreEntrant)++;
+        }
+        if (arcs[i].source == sommetIndex) {
+            (*demiDegreSortant)++;
+        }
+    }
+}
+void sousMenuDemiDegres(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
+    int sommetIndex;
+    printf("\n--- Calcul des demi-degres ---\n");
+    printf("Selectionnez un sommet (0-%d) : ", nbSommets - 1);
+    scanf("%d", &sommetIndex);
+
+    if (sommetIndex >= 0 && sommetIndex < nbSommets) {
+        int demiDegreEntrant, demiDegreSortant;
+        calculerDemiDegres(sommetIndex, arcs, nbArcs, &demiDegreEntrant, &demiDegreSortant);
+
+        printf("\n--- Demi-degres pour l'espece : %s ---\n", sommets[sommetIndex].nom);
+        printf("Demi-degre entrant : %d\n", demiDegreEntrant);
+        printf("Demi-degre sortant : %d\n", demiDegreSortant);
+    } else {
+        printf("\nSommet invalide.\n");
+    }
+
+    printf("\nAppuyez sur Entrée pour continuer...\n");
+    getchar();
+    getchar();
+}
+
 
 
 void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
     int sousChoix;
 
     do {
-        //system("cls"); // Nettoyer l'écran pour Windows
+        system("cls"); // Nettoyer l'écran pour Windows
 
         printf("=========================================\n");
         printf("        Menu du reseau : %s\n", nomEcosysteme);
@@ -331,7 +367,8 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
         printf("3. Calculer les statistiques du graphe\n");
         printf("4. Identifier les sommets particuliers\n");
         printf("5. Lancer la simulation\n");
-        printf("6. Retour au menu principal\n");
+        printf("6. Calculer les demi-degres d'un sommet\n");
+        printf("7. Retour au menu principal\n");
         printf("=========================================\n");
         printf("Votre choix : ");
         scanf("%d", &sousChoix);
@@ -363,20 +400,23 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
                  scanf("%d", &iterations);
                  simulationDynamique(sommets, nbSommets, arcs, nbArcs, iterations);
             break;
-
             case 6:
+                sousMenuDemiDegres(sommets, nbSommets, arcs, nbArcs);
+                break;
+
+            case 7:
                 printf("\nRetour au menu principal...\n");
                 break;
             default:
                 printf("\nChoix invalide. Veuillez reessayer.\n");
         }
 
-        if (sousChoix != 6) {
+        if (sousChoix != 7) {
             printf("\nAppuyez sur Entree pour continuer...\n");
             getchar();
             getchar();
         }
-    } while (sousChoix != 6);
+    } while (sousChoix != 7);
 }
 
 void menuPrincipal() {

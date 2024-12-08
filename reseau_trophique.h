@@ -58,3 +58,6 @@ void afficherGraphiqueDot(const char *fichierDot);
 void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs);
 void menuPrincipal();
 #endif //RESEAU_TROPHIC_RESEAU_TROPHIQUE_H
+
+void sousMenuDemiDegres(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs);
+void calculerDemiDegres(int sommetIndex, Arc *arcs, int nbArcs, int *demiDegreEntrant, int *demiDegreSortant);
