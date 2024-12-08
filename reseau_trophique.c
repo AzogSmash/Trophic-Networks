@@ -226,7 +226,7 @@ void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int 
 
     for (int t = 0; t <= iterations; t++) {
         printf("%d\t\t%.2f\n", t, N);
-        N = N + r * N * (1 - N / K); // Équation logistique
+        N = N + r * N * (1 - N / K); // Équation phare pour la dynamique de population
         if (N < 0) {
             N = 0; // Extinction
             break;
