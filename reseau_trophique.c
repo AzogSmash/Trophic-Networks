@@ -272,9 +272,57 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
         }
     } else if (choixSimulation == 2) {
         printf("\n--- Paramètres predefinis appliques ---\n");
-        float valeursPopulations[] = {100, 50, 200, 150, 80, 70, 90, 120, 300, 250};
-        float valeursTauxCroissance[] = {0.1, 0.05, 0.15, 0.2, 0.12, 0.08, 0.1, 0.09, 0.07, 0.06};
-        float valeursCapaciteCharge[] = {500, 300, 700, 600, 400, 350, 450, 550, 800, 750};
+        float *valeursPopulations = NULL;
+        float *valeursTauxCroissance = NULL;
+        float *valeursCapaciteCharge = NULL;
+        if (nbSommets == 10) {
+            // Allocation dynamique
+            valeursPopulations = (float *) malloc(nbSommets * sizeof(float));
+            valeursTauxCroissance = (float *) malloc(nbSommets * sizeof(float));
+            valeursCapaciteCharge = (float *) malloc(nbSommets * sizeof(float));
+            // Initialisation
+            float tempPop[] = {10, 50, 200, 1000, 300, 800, 5000, 50, 10000, 3000};
+            float tempCroissance[] = {0.02, 0.05, 0.1, 0.15, 0.08, 0.1, 0.3, 0.05, 0.4, 0.25};
+            float tempCharge[] = {20, 100, 500, 2000, 500, 1500, 10000, 100, 20000, 5000};
+            for (int i = 0; i < nbSommets; i++) {
+                valeursPopulations[i] = tempPop[i];
+                valeursTauxCroissance[i] = tempCroissance[i];
+                valeursCapaciteCharge[i] = tempCharge[i];
+            }
+        }
+        else if (nbSommets==14){
+            // Allocation dynamique
+            valeursPopulations = (float *) malloc(nbSommets * sizeof(float));
+            valeursTauxCroissance = (float *) malloc(nbSommets * sizeof(float));
+            valeursCapaciteCharge = (float *) malloc(nbSommets * sizeof(float));
+            // Initialisation
+            float tempPop[] = {2000, 300, 200, 50, 30, 400, 5000, 10000, 100, 150, 3000, 50, 40, 20};
+            float tempCroissance[] = {0.4, 0.1, 0.04, 0.05, 0.02, 0.08, 0.3, 0.5, 0.05, 0.06, 0.2, 0.03, 0.03, 0.02};
+            float tempCharge[] = {4000, 800, 500, 150, 60, 1200, 10000, 20000, 250, 400, 6000, 100, 90, 50};
+             for (int i = 0; i < nbSommets; i++) {
+                valeursPopulations[i] = tempPop[i];
+                valeursTauxCroissance[i] = tempCroissance[i];
+                valeursCapaciteCharge[i] = tempCharge[i];
+            }
+
+        }
+        else {
+        // Allocation dynamique
+        valeursPopulations = (float *) malloc(nbSommets * sizeof(float));
+        valeursTauxCroissance = (float *) malloc(nbSommets * sizeof(float));
+        valeursCapaciteCharge = (float *) malloc(nbSommets * sizeof(float));
+        // Initialisation
+        float tempPop[] = {10, 50, 100, 40, 200, 30, 300, 150, 50, 20, 10, 20, 10, 30, 5000, 200, 150, 50, 1000, 1500, 10};
+        float tempCroissance[] = {0.05, 0.1, 0.05, 0.1, 0.1, 0.15, 0.2, 0.05, 0.05, 0.05, 0.1, 0.05, 0.02, 0.02, 0.4, 0.1, 0.1, 0.05, 0.2, 0.3, 0.03};
+        float tempCharge[] = {50, 200, 300, 150, 500, 80, 1000, 500, 150, 80, 30, 50, 50, 100, 10000, 500, 500, 150, 2000, 3000, 40};
+        for (int i = 0; i < nbSommets; i++) {
+                valeursPopulations[i] = tempPop[i];
+                valeursTauxCroissance[i] = tempCroissance[i];
+                valeursCapaciteCharge[i] = tempCharge[i];
+        }
+        }
+
+
 
         for (int i = 0; i < nbSommets; i++) {
             populations[i] = valeursPopulations[i % 10];
