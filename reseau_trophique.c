@@ -248,9 +248,9 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
     scanf("%d", &choixSimulation);
 
     // Declaration des tableaux de paramètres
-    float *populations = (float *)malloc(nbSommets * sizeof(float));
-    float *tauxCroissance = (float *)malloc(nbSommets * sizeof(float));
-    float *capaciteCharge = (float *)malloc(nbSommets * sizeof(float));
+    float *populations = (float *) malloc(nbSommets * sizeof(float));
+    float *tauxCroissance = (float *) malloc(nbSommets * sizeof(float));
+    float *capaciteCharge = (float *) malloc(nbSommets * sizeof(float));
 
     if (!populations || !tauxCroissance || !capaciteCharge) {
         printf("Erreur : allocation memoire pour les paramètres.\n");
@@ -282,7 +282,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             tauxCroissance[i] = valeursTauxCroissance[i % 10];
             capaciteCharge[i] = valeursCapaciteCharge[i % 10];
 
-            printf("  %s : Pop=%.2f, r=%.2f, K=%.2f\n", 
+            printf("  %s : Pop=%.2f, r=%.2f, K=%.2f\n",
                    sommets[i].nom, populations[i], tauxCroissance[i], capaciteCharge[i]);
         }
     } else {
@@ -336,13 +336,16 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             populations[destination] -= impact;
             if (populations[destination] < 0) populations[destination] = 0;
 
-    // Libération des mémoires
-    free(populations);
-    free(tauxCroissance);
-    free(capaciteCharge);
+            // Libération des mémoires
+            free(populations);
+            free(tauxCroissance);
+            free(capaciteCharge);
 
-    printf("\n--- Fin de la simulation ---\n");
+            printf("\n--- Fin de la simulation ---\n");
+        }
+    }
 }
+
 
 
 void afficherGraphiqueDot(const char *fichierDot) {
