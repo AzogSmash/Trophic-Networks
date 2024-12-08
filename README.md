@@ -8,13 +8,13 @@ des informations sur les espèces, de vérifier la connexité du réseau, et de 
 
 
 
-PREREQUIS:
+## PREREQUIS:
 
     -Langage : C
     -Plugin sur Clion : DOT language 
 
 
-  CHOIX DES FORMATS DES FICHIERS
+##  CHOIX DES FORMATS DES FICHIERS
   
     -.txt
         Le format .txt a été notamment été choisi pour sa simplicité et sa lisibilité : il est simple a comprendre et a manipuler.
@@ -30,7 +30,7 @@ PREREQUIS:
         simple la compréhesion du réseau
 
 
-  SIMULATION DYNAMIQUE
+##  SIMULATION DYNAMIQUE
 
         Nous avons choisi deux approches pour la simulation dynamique : 
         
