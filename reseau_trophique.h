@@ -29,7 +29,7 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
 void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const char *nomEcosysteme, const char *climat);
 
 // Fonction pour afficher les prédécesseurs et successeurs d'un sommet
-void predecessorsAndSuccessors(int sommetIndex, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs);
+void SucceseurEtPredeceseur(int sommetIndex, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs);
 
 // Fonction pour calculer la complexité du graphe
 void calculerComplexite(int nbSommets, int nbArcs);
@@ -52,7 +52,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
 void simulationMenu(Sommet *sommets, int nbSommets);
 
 // Fonction pour afficher un graphique DOT
-void afficherGraphiqueDot(const char *fichierDot);
+void DotGraph(const char *fichierDot);
 
 // Sous-menu pour explorer le réseau trophique
 void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs);
