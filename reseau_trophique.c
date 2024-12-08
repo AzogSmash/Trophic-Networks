@@ -215,7 +215,7 @@ int verifierConnexite(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs) {
 }
 // Fonction pour simuler la dynamique de population d'une espèce
 void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int iterations) {
-    printf("\n--- Simulation pour l'espèce : %s ---\n", sommet->nom);
+    printf("\n--- Simulation pour l'espece : %s ---\n", sommet->nom);
     printf("Population initiale (N0) : %.2f\n", N0);
     printf("Taux de croissance (r) : %.2f\n", r);
     printf("Capacite de charge (K) : %.2f\n", K);
