@@ -3,7 +3,7 @@
 
 
 Ce projet consiste à analyser et modéliser des réseaux trophiques en utilisant des graphes pour représenter les interactions
-entre différentes espèces dans un écosystème. Le programme permet de charger des réseaux à partirde fichiers texte, d'afficher
+entre différentes espèces dans un écosystème. Le programme permet de charger des réseaux à partir de fichiers texte, d'afficher
 des informations sur les espèces, de vérifier la connexité du réseau, et de simuler la dynamique des populations.
 
 
