@@ -254,6 +254,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
     // Initialisation des populations
     for (int i = 0; i < nbSommets; i++) {
         printf("Entrez la population initiale pour l'espece '%s' : ", sommets[i].nom);
+         // Demander à l'utilisateur de saisir la population initiale pour l'espèce spécifiée
         scanf("%f", &populations[i]);
         if (populations[i] < 0) populations[i] = 0; // Éviter les valeurs négatives
     }

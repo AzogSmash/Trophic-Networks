@@ -28,3 +28,12 @@ PREREQUIS:
         Ce format permet ainsi de rendre visuel et encore plus compréhensible les reséaux trophique. De plus il permet de rajouter des
         couleurs pour marquer certaine caractéristique comme les niveaux trophiques et d'ajouter des élgende pour rendre encore plus
         simple la compréhesion du réseau
+
+
+  SIMULATION DYNAMIQUE
+
+        On a donc choisi deux possibilité pour la simulation dynamique : 
+                           - On peut soit faire une simulation avec des valeurs de No ( Population initiale ), r ( Taux de croissance ) et K ( Capacité de charge ) prédéfinies. Ces valeurs on les a determinées en faisant des recherches par exemple pour la population initiale on a chercher le rapport entre chaque espéce. Ce sont donc des valeurs qui essaye de reproduire la réalité au mieux.
+                           - On peut aussi le faire de facon manuelle afin de tester des paramete No, k ou r qui pourrait donc influencer le resultat " attendue ".
+  
+        
