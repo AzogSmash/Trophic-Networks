@@ -43,13 +43,9 @@ void dfs(int sommet, int *visite, Arc *arcs, int nbArcs, int nbSommets);
 // Fonction pour vérifier la connexité du graphe
 int verifierConnexite(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs);
 
-// Fonction pour simuler la dynamique de population d'une espèce
-void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int iterations);
 
-// Fonction (kais) pour simuler la dynamique de population
+// Fonction pour simuler la dynamique de population
 void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, int iterations);
-// Intégration dans le menu
-void simulationMenu(Sommet *sommets, int nbSommets);
 
 // Fonction pour afficher un graphique DOT
 void DotGraph(const char *fichierDot);
