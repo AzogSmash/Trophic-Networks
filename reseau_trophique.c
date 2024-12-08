@@ -271,7 +271,7 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             scanf("%f", &capaciteCharge[i]);
         }
     } else if (choixSimulation == 2) {
-        printf("\n--- Paramètres predefinis appliques ---\n");
+        printf("\n--- Parametres predefinis appliques ---\n");
         float *valeursPopulations = NULL;
         float *valeursTauxCroissance = NULL;
         float *valeursCapaciteCharge = NULL;
