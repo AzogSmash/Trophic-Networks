@@ -12,6 +12,7 @@ des informations sur les espèces, de vérifier la connexité du réseau, et de 
 
     -Langage : C
     -Plugin sur Clion : DOT language 
+    -gnuplot
 
 
 ##  CHOIX DES FORMATS DES FICHIERS
