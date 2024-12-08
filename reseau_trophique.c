@@ -20,7 +20,7 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
     fscanf(fichier, "%d %d\n", nbSommets, nbArcs);
 
     // Allocation mémoire pour les sommets et les arcs
-    *sommets = (Sommet *)malloc(*nbSommets * sizeof(Sommet));
+    *sommets = (Sommet *)malloc(*nbSommets * sizeof(Sommet)); //Alloue dynamiquement de la mémoire pour un tableau de *nbSommets structures de type Sommet
     *arcs = (Arc *)malloc(*nbArcs * sizeof(Arc));
 
     // Lecture des sommets
