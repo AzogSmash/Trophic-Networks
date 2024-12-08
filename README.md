@@ -14,6 +14,19 @@ des informations sur les espèces, de vérifier la connexité du réseau, et de 
     -Plugin sur Clion : DOT language 
     -gnuplot
 
+## Installation de Gnuplot
+
+### Installation sous Windows
+1. Rendez-vous sur le site officiel de Gnuplot : [http://www.gnuplot.info](http://www.gnuplot.info).
+2. Téléchargez le fichier d'installation pour Windows (`gnuplot-x.x.x-win64-mingw.exe`).
+3. Lancez l'installateur et suivez les étapes :
+   - Acceptez les termes de la licence.
+   - Sélectionnez le répertoire d'installation (par défaut, `C:\Program Files\gnuplot`).
+   - Assurez-vous que l'option "Add Gnuplot to PATH" est cochée.
+4. Vérifiez l'installation :
+   - Ouvrez un terminal (PowerShell ou CMD).
+   - Tapez `gnuplot` et appuyez sur Entrée. Si Gnuplot s'ouvre, l'installation a réussi.
+
 
 ##  CHOIX DES FORMATS DES FICHIERS
   
