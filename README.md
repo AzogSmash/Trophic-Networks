@@ -61,12 +61,22 @@ des informations sur les espèces, de vérifier la connexité du réseau, et de 
       de population et leurs impacts écologiques. Cette approche utilise une équation de croissance logistique pour simuler les variations de population.
 
 
-   ## SOURCES
+ ## SOURCES
 
-     - [Dépôt GitHub](https://github.com/AzogSmash/Trophic-Networks)
-    - [Documentation en ligne sur Graphviz](https://dreampuf.github.io/GraphvizOnline/)
-    - [FishBase](https://www.fishbase.se/)
-    - [Globalbi] https://www.globalbioticinteractions.org/
+      - [Dépôt GitHub](https://github.com/AzogSmash/Trophic-Networks) : Ce dépôt est utilisé pour la gestion collaborative du projet, le suivi des versions, et pour partager le code avec le jury ou les évaluateurs.
+      - [Documentation en ligne sur Graphviz](https://dreampuf.github.io/GraphvizOnline/) : Utilisée pour visualiser rapidement les fichiers DOT générés par le programme, permettant une vérification et une présentation claire des réseaux trophiques.
+      - [FishBase](https://www.fishbase.se/) : Fournit des données biologiques et écologiques précises sur les espèces marines, utilisées pour valider les pondérations et les relations entre prédateurs et proies dans le réseau marin.
+      - [Globalbiotic Interactions (GloBI)](https://www.globalbioticinteractions.org/) : Base de données interactive pour explorer les interactions trophiques et valider les graphes utilisés dans les simulations.
+      - [CProgramming.com](https://www.cprogramming.com) : Tutoriels détaillés pour la programmation en C.
+      - [Learn-C.org](https://www.learn-c.org) : Apprentissage interactif pour le langage C.
+      - [GeeksforGeeks - Algorithmes de graphes](https://www.geeksforgeeks.org/graph-data-structure-and-algorithms/) : Références sur les algorithmes liés aux graphes.
+      - [TutorialsPoint - Programmation C](https://www.tutorialspoint.com/cprogramming/index.htm) : Explications sur la gestion des fichiers et la mémoire.
+      - [Gnuplot Official Site](http://www.gnuplot.info) : Documentation officielle pour les graphiques dynamiques.
+      - [Graphviz Official Site](https://graphviz.org) : Documentation sur l'utilisation des fichiers DOT.
+      - [Stack Overflow](https://stackoverflow.com) : Communauté pour résoudre des problèmes spécifiques en C.
+      - [GitHub - Projets similaires](https://github.com) : Pour rechercher des implémentations similaires en open source.
+      - [Reddit - r/C_Programming](https://www.reddit.com/r/C_Programming/) : Discussions et retours d'expérience sur la programmation en C.
+
 
 
 
