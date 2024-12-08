@@ -67,14 +67,14 @@ void SucceseurEtPredeceseur(int sommetIndex, Sommet *sommets, int nbSommets, Arc
 
     // Liste des predecesseurs
     printf("Predecesseurs :\n");
-    int hasPredecesseurs = 0;
+    int aDesPrédecesseurs = 0;
     for (int i = 0; i < nbArcs; i++) {
         if (arcs[i].destination == sommetIndex) {
             printf("  - %s\n", sommets[arcs[i].source].nom);
-            hasPredecesseurs = 1;
+            aDesPrédecesseurs = 1;
         }
     }
-    if (!hasPredecesseurs) {
+    if (!aDesPrédecesseurs) {
         printf("  Aucun\n");
     }
 
