@@ -32,10 +32,23 @@ PREREQUIS:
 
   SIMULATION DYNAMIQUE
 
-        On a donc choisi deux possibilité pour la simulation dynamique : 
-                           - On peut soit faire une simulation avec des valeurs de No ( Population initiale ), r ( Taux de croissance ) et K ( Capacité de charge ) prédéfinies.
-                           Ces valeurs on les a determinées en faisant des recherches par exemple pour la population initiale on a chercher le rapport entre chaque espéce. Ce sont donc des valeurs qui essaye de 
-                           reproduire la réalité au mieux.
-                           - On peut aussi le faire de facon manuelle afin de tester des paramete No, k ou r qui pourrait donc influencer le resultat " attendue ".
+        Nous avons choisi deux approches pour la simulation dynamique :
+        
+        - 1. Simulation avec des paramètres prédéfinis - Cette méthode utilise des valeurs prédéterminées pour No (population initiale),
+        r (taux de croissance) et K (capacité de charge). Ces valeurs ont été établies à partir de recherches approfondies, notamment en 
+        analysant les proportions relatives entre les différentes espèces. L'objectif est de reproduire au mieux la réalité, avec des
+        paramètres qui se rapprochent autant que possible des conditions naturelles. 
+        
+        - 2. Simulation manuelle pour explorer différents scénarios - Cette méthode permet de modifier manuellement les paramètres No,
+        K ou r afin d'examiner leur influence sur le résultat attendu. Elle offre la possibilité de simuler des extinctions ou des
+        disparitions partielles de certaines espèces et d'observer leurs répercussions sur une période donnée. Cela permet d'évaluer
+        l'importance relative d'une espèce dans un écosystème spécifique.
+
+
+
+
+
+
+
   
         
