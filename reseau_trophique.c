@@ -12,9 +12,9 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
 
     // Lecture du nom de l'écosystème et du climat
     fgets(nomEcosysteme, 50, fichier);
-    nomEcosysteme[strcspn(nomEcosysteme, "\n")] = '\0'; // Retirer le saut de ligne
+    nomEcosysteme[strcspn(nomEcosysteme, "\n")] = '\0';
     fgets(climat, 50, fichier);
-    climat[strcspn(climat, "\n")] = '\0'; // Retirer le saut de ligne
+    climat[strcspn(climat, "\n")] = '\0';
 
     // Lecture du nombre de sommets et d'arcs
     fscanf(fichier, "%d %d\n", nbSommets, nbArcs);
@@ -36,7 +36,6 @@ void lireGraphe(const char *nomFichier, char *nomEcosysteme, char *climat, Somme
 
     fclose(fichier);
 }
-
 
 void afficherReseau(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, const char *nomEcosysteme, const char *climat) {
     system("cls");
@@ -247,7 +246,6 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
 
     // Tableau pour les populations courantes (N_t)
     float *populations = (float *)malloc(nbSommets * sizeof(float));
-    // Vérifie si malloc a échoué et affiche un message d'erreur avant de terminer le programme
     if (!populations) {
         printf("Erreur : allocation mémoire pour les populations.\n");
         exit(1);
@@ -297,7 +295,6 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
             // Impact de la prédation (pondéré par l'arc)
             float impact = arcs[i].ponderation * populations[source];
             populations[destination] -= impact;
-            // Empêcher les valeurs négatives dans les populations de destination
             if (populations[destination] < 0) populations[destination] = 0;
 
             // Conversion partielle en croissance pour le prédateur
@@ -317,7 +314,6 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
 void afficherGraphiqueDot(const char *fichierDot) {
     char commande[256];
     snprintf(commande, sizeof(commande), "start %s", fichierDot);
-    // Construire une commande pour exécuter le fichier Dot avec la commande "start"
     system(commande);
 }
 void calculerDemiDegres(int sommetIndex, Arc *arcs, int nbArcs, int *demiDegreEntrant, int *demiDegreSortant) {
@@ -362,7 +358,7 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
 
     do {
         system("cls"); // Nettoyer l'écran pour Windows
-        //Affichage du sous menu
+
         printf("=========================================\n");
         printf("        Menu du reseau : %s\n", nomEcosysteme);
         printf("=========================================\n");
@@ -401,11 +397,11 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
             case 5:
                 printf("\nEntrez le nombre d'iterations pour la simulation : ");
                 int iterations;
-                 scanf("%d", &iterations); //Analyse le nombre d'itérations que l'utilisateur souhaite
-                 simulationDynamique(sommets, nbSommets, arcs, nbArcs, iterations); //Appel de la fonction pour la simulation
+                 scanf("%d", &iterations);
+                 simulationDynamique(sommets, nbSommets, arcs, nbArcs, iterations);
             break;
             case 6:
-                sousMenuDemiDegres(sommets, nbSommets, arcs, nbArcs); //option pour calculer le demi-degré
+                sousMenuDemiDegres(sommets, nbSommets, arcs, nbArcs);
                 break;
 
             case 7:
@@ -428,7 +424,7 @@ void menuPrincipal() {
 
     do {
         system("cls"); // Nettoyer l'écran pour Windows
-        //Affichage des options du menu principal
+
         printf("=========================================\n");
         printf("        Programme Trophic Networks       \n");
         printf("=========================================\n");
@@ -464,7 +460,7 @@ void menuPrincipal() {
             // Lecture du graphe
             lireGraphe(cheminFichier, nomEcosysteme, climat, &sommets, &nbSommets, &arcs, &nbArcs);
 
-            // Affichage des informations du réseau
+            // Affichage des informations textuelles du réseau
             afficherReseau(sommets, nbSommets, arcs, nbArcs, nomEcosysteme, climat);
 
             // Affichage graphique du fichier DOT
