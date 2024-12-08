@@ -1,0 +1,77 @@
+digraph Terrestre {
+    // Définir les couleurs des sommets (niveaux trophiques)
+    // Niveau 1 (Producteurs primaires) - Vert
+    Graminees [color=green, label="Graminées\nNiveau 1"];
+Acacias [color=green, label="Acacias\nNiveau 1"];
+Baobabs [color=green, label="Baobabs\nNiveau 1"];
+
+// Niveau 2 (Consommateurs primaires) - Jaune
+    Buffle [color=yellow, label="Buffle d'Afrique\nNiveau 2"];
+Zebre [color=yellow, label="Zèbre\nNiveau 2"];
+Gazelle [color=yellow, label="Gazelle\nNiveau 2"];
+DikDik [color=yellow, label="Dik-Dik\nNiveau 2"];
+Girafe [color=yellow, label="Girafe\nNiveau 2"];
+Hippopotame [color=yellow, label="Hippopotame\nNiveau 2"];
+Elephant [color=yellow, label="Éléphant\nNiveau 2"];
+
+// Niveau 3 (Consommateurs secondaires) - Orange
+    Hyene [color=orange, label="Hyène\nNiveau 3"];
+Chacal [color=orange, label="Chacal\nNiveau 3"];
+Guepard [color=orange, label="Guépard\nNiveau 3"];
+Leopard [color=orange, label="Léopard\nNiveau 3"];
+Python [color=orange, label="Python\nNiveau 3"];
+Vautour [color=orange, label="Vautour\nNiveau 3"];
+
+// Niveau 4 (Consommateurs tertiaires) - Rouge
+    Lion [color=red, label="Lion\nNiveau 4"];
+Crocodile [color=red, label="Crocodile\nNiveau 4"];
+Aigle [color=red, label="Aigle Martial\nNiveau 4"];
+
+// Relations trophiques (arcs)
+    Lion -> Buffle [label="0.20"];
+Lion -> Zebre [label="0.35"];
+Lion -> Gazelle [label="0.35"];
+Lion -> Hyene [label="0.10"];
+Hyene -> Zebre [label="0.30"];
+Hyene -> Gazelle [label="0.40"];
+Hyene -> Chacal [label="0.20"];
+Hyene -> Leopard [label="0.15"];
+Vautour -> Hyene [label="0.10"];
+Vautour -> Chacal [label="0.20"];
+Vautour -> Leopard [label="0.15"];
+Leopard -> Gazelle [label="0.40"];
+Leopard -> Zebre [label="0.30"];
+Guepard -> Gazelle [label="0.70"];
+Guepard -> Zebre [label="0.30"];
+Python -> Zebre [label="0.50"];
+Python -> Gazelle [label="0.40"];
+Crocodile -> Hippopotame [label="0.50"];
+Crocodile -> Gazelle [label="0.50"];
+Aigle -> Gazelle [label="0.50"];
+Aigle -> Zebre [label="0.50"];
+Zebre -> Graminees [label="1.00"];
+Gazelle -> Graminees [label="1.00"];
+DikDik -> Acacias [label="0.50"];
+DikDik -> Graminees [label="0.50"];
+Girafe -> Acacias [label="0.50"];
+Girafe -> Baobabs [label="0.50"];
+Elephant -> Baobabs [label="0.50"];
+Buffle -> Graminees [label="1.00"];
+Hippopotame -> Graminees [label="1.00"];
+
+// Création d'une légende
+    subgraph cluster_legend {
+label="Légende";
+style=dashed;
+node [shape=plaintext];
+
+// Description textuelle des niveaux
+        legend_text [label="1. Niveau 1: Producteurs primaires\n2. Niveau 2: Consommateurs primaires\n3. Niveau 3: Consommateurs secondaires\n4. Niveau 4: Consommateurs tertiaires", shape=rect, style=dotted];
+
+// Niveaux trophiques avec couleurs
+        level1 [label="Niveau 1", style=filled, fillcolor=green, width=0.2];
+level2 [label="Niveau 2", style=filled, fillcolor=yellow, width=0.2];
+level3 [label="Niveau 3", style=filled, fillcolor=orange, width=0.2];
+level4 [label="Niveau 4", style=filled, fillcolor=red, width=0.2];
+}
+}
