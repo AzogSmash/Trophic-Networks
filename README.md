@@ -57,6 +57,15 @@ PREREQUIS:
 
 
 
+   ## Sources 
+
+     - [Dépôt GitHub](https://github.com/AzogSmash/Trophic-Networks)
+    - [Documentation en ligne sur Graphviz](https://dreampuf.github.io/GraphvizOnline/)
+    - [FishBase](https://www.fishbase.se/)
+    - [Globalbi] https://www.globalbioticinteractions.org/
+
+
+
 
 
 
