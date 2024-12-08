@@ -241,8 +241,8 @@ void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, 
 
     // Demander à l'utilisateur de choisir le type de simulation
     printf("\n--- Choisissez le mode de simulation ---\n");
-    printf("1. Saisie manuelle des paramètres\n");
-    printf("2. Utiliser des paramètres predefinis\n");
+    printf("1. Saisie manuelle des parametres\n");
+    printf("2. Utiliser des parametres predefinis\n");
     printf("Votre choix : ");
     scanf("%d", &choixSimulation);
 
