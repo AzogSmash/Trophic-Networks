@@ -235,31 +235,80 @@ void simulationPopulationSommet(Sommet *sommet, float N0, float r, float K, int 
 }
 
 // Intégration dans le menus
-void simulationMenu(Sommet *sommets, int nbSommets) {
-    int sommetIndex;
-    float N0, r, K;
-    int iterations;
+// Fonction pour simuler la dynamique des populations dans tout le réseau trophique
+void simulationDynamique(Sommet *sommets, int nbSommets, Arc *arcs, int nbArcs, int iterations) {
+    // Afficher les paramètres
+    printf("\n--- Simulation globale des populations ---\n");
+    printf("Nombre d'iterations : %d\n", iterations);
+    printf("Nombre d'especes : %d\n", nbSommets);
+    printf("Nombre d'interactions : %d\n\n", nbArcs);
 
-    printf("\n--- Simulation de population ---\n");
-    printf("Sélectionnez un sommet (0-%d) : ", nbSommets - 1);
-    scanf("%d", &sommetIndex);
-
-    if (sommetIndex >= 0 && sommetIndex < nbSommets) {
-        printf("Entrez la population initiale (N0) : ");
-        scanf("%f", &N0);
-        printf("Entrez le taux de croissance (r) : ");
-        scanf("%f", &r);
-        printf("Entrez la capacité de charge (K) : ");
-        scanf("%f", &K);
-        printf("Entrez le nombre d'itérations : ");
-        scanf("%d", &iterations);
-
-        // Appel de la simulation pour l'espèce sélectionnée
-        simulationPopulationSommet(&sommets[sommetIndex], N0, r, K, iterations);
-    } else {
-        printf("Sommet invalide.\n");
+    // Tableau pour les populations courantes (N_t)
+    float *populations = (float *)malloc(nbSommets * sizeof(float));
+    if (!populations) {
+        printf("Erreur : allocation mémoire pour les populations.\n");
+        exit(1);
     }
+
+    // Initialisation des populations
+    for (int i = 0; i < nbSommets; i++) {
+        printf("Entrez la population initiale pour l'espece '%s' : ", sommets[i].nom);
+        scanf("%f", &populations[i]);
+        if (populations[i] < 0) populations[i] = 0; // Éviter les valeurs négatives
+    }
+
+    // Tableau des paramètres biologiques (r et K pour chaque espèce)
+    float *tauxCroissance = (float *)malloc(nbSommets * sizeof(float));
+    float *capaciteCharge = (float *)malloc(nbSommets * sizeof(float));
+    if (!tauxCroissance || !capaciteCharge) {
+        printf("Erreur : allocation mémoire pour les paramètres biologiques.\n");
+        free(populations);
+        exit(1);
+    }
+
+    for (int i = 0; i < nbSommets; i++) {
+        printf("Entrez le taux de croissance (r) pour l'espece '%s' : ", sommets[i].nom);
+        scanf("%f", &tauxCroissance[i]);
+        printf("Entrez la capacite de charge (K) pour l'espece '%s' : ", sommets[i].nom);
+        scanf("%f", &capaciteCharge[i]);
+    }
+
+    // Simulation des itérations
+    for (int t = 0; t <= iterations; t++) {
+        printf("\nIteration %d\n", t);
+        printf("--------------------\n");
+
+        // Mise à jour des populations selon la dynamique logistique
+        for (int i = 0; i < nbSommets; i++) {
+            populations[i] += tauxCroissance[i] * populations[i] *
+                              (1 - populations[i] / capaciteCharge[i]);
+            if (populations[i] < 0) populations[i] = 0; // Éviter des valeurs négatives
+            printf("  %s : %.2f\n", sommets[i].nom, populations[i]);
+        }
+
+        // Appliquer les interactions trophiques
+        for (int i = 0; i < nbArcs; i++) {
+            int source = arcs[i].source;
+            int destination = arcs[i].destination;
+
+            // Impact de la prédation (pondéré par l'arc)
+            float impact = arcs[i].ponderation * populations[source];
+            populations[destination] -= impact;
+            if (populations[destination] < 0) populations[destination] = 0;
+
+            // Conversion partielle en croissance pour le prédateur
+            populations[source] += impact * 0.1; // Coefficient d'efficacité trophique
+        }
+    }
+
+    // Libération des mémoires
+    free(populations);
+    free(tauxCroissance);
+    free(capaciteCharge);
+
+    printf("\n--- Fin de la simulation ---\n");
 }
+
 
 void afficherGraphiqueDot(const char *fichierDot) {
     char commande[256];
@@ -272,7 +321,7 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
     int sousChoix;
 
     do {
-        system("cls"); // Nettoyer l'écran pour Windows
+        //system("cls"); // Nettoyer l'écran pour Windows
 
         printf("=========================================\n");
         printf("        Menu du reseau : %s\n", nomEcosysteme);
@@ -281,7 +330,8 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
         printf("2. Afficher les details d'un sommet\n");
         printf("3. Calculer les statistiques du graphe\n");
         printf("4. Identifier les sommets particuliers\n");
-        printf("5. Retour au menu principal\n");
+        printf("5. Lancer la simulation\n");
+        printf("6. Retour au menu principal\n");
         printf("=========================================\n");
         printf("Votre choix : ");
         scanf("%d", &sousChoix);
@@ -308,18 +358,25 @@ void sousMenuReseau(const char *nomEcosysteme, Sommet *sommets, int nbSommets, A
                 analyserGraphe(sommets, nbSommets, arcs, nbArcs);
                 break;
             case 5:
+                printf("\nEntrez le nombre d'iterations pour la simulation : ");
+                int iterations;
+                 scanf("%d", &iterations);
+                 simulationDynamique(sommets, nbSommets, arcs, nbArcs, iterations);
+            break;
+
+            case 6:
                 printf("\nRetour au menu principal...\n");
                 break;
             default:
                 printf("\nChoix invalide. Veuillez reessayer.\n");
         }
 
-        if (sousChoix != 5) {
+        if (sousChoix != 6) {
             printf("\nAppuyez sur Entree pour continuer...\n");
             getchar();
             getchar();
         }
-    } while (sousChoix != 5);
+    } while (sousChoix != 6);
 }
 
 void menuPrincipal() {
